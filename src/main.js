@@ -1,4 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import store from './store'
+
+require('/mock/index.js')
+
+createApp(App).use(store).mount('#app')

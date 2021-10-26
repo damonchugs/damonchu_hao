@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout-container">
     <LeftMenu />
     <RightContent />
   </div>
@@ -22,5 +22,8 @@
 </script>
 
 <style lang="scss" scoped>
-
+.layout-container {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

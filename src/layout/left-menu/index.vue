@@ -2,6 +2,7 @@
   <div class="left-menu">
     <div class="logo">damonchu-hao</div>
     <Menu />
+    <div class="left-menu-bottom">沪123456</div>
   </div>
 </template>
 
@@ -22,6 +23,12 @@ export default {
     line-height: 80px;
     color: white;
     background-color: #595959;
+  }
+  .left-menu-bottom {
+    height: 60px;
+    line-height: 60px;
+    color: #707070;
+    background-color: #fbfbfb;
   }
 }
 </style>

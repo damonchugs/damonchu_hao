@@ -4,47 +4,36 @@
       <p :class="`menu-name menu-parent ${t.open ? 'active' : ''}`" @click="openChild(menu, t)">{{ t.name }}</p>
       
       <div class="menu-child-content" :style="`height: ${t.open ? t.children.length * 40 : 0}px;`">
-        <p v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`" :class="`menu-name menu-child ${te.open ? 'active' : ''}`" @click="gotoRouter(menu, index, te)">{{ t.name }}</p>
+        <p v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`" :class="`menu-name menu-child ${te.open ? 'active' : ''}`" @click="gotoRouter(menu, index, te)">{{ te.name }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex';
 export default {
   setup () {
-    const menu = ref([
-      {
-        name: 'fa_1',
-        src: 'faSrc_1',
-        open: true,
-        children: [{ name: 'fa_1_1', src: 'faSrc_1_1', open: false }, { name: 'fa_1_2', src: 'faSrc_1_2', open: false }, { name: 'fa_1_3', src: 'faSrc_1_3', open: false }]
-      },
-      {
-        name: 'fa_2',
-        src: 'faSrc_2',
-        open: false,
-        children: [{ name: 'fa_2_1', src: 'faSrc_2_1', open: false }, { name: 'fa_2_2', src: 'faSrc_2_2', open: false }, { name: 'fa_2_3', src: 'faSrc_2_3', open: false }]
-      },
-      {
-        name: 'fa_3',
-        src: 'faSrc_3',
-        open: false,
-        children: [{ name: 'fa_3_1', src: 'faSrc_3_1', open: false }, { name: 'fa_3_2', src: 'faSrc_3_2', open: false }, { name: 'fa_3_3', src: 'faSrc_3_3', open: false }]
-      }
-    ])
+    const store = useStore();
+    let router = computed(() => store.state.router.router)
+    let pathName = computed(() => store.state.router.path)
 
+    const menu = ref(router)
+
+    // 子目录选择
     const gotoRouter = (menu, index, te) => {
-      console.log(te.src)
+      // this.$route.push({ path: menu[index].src + '/' + te.src })
       te.open = !te.open
-      // otherMenuSet(menu, te.name)
       menu[index].children.filter(t => te.name !== t.name).map(tem => tem.open = false)
+      store.dispatch('router/setPath', `${pathName.value.split('/')[0].trim()} / ${te.name}`)
     }
 
+    // 父级目录选择
     const openChild = (menu, t) => {
       t.open = !t.open
       otherMenuSet(menu, t.name)
+      store.dispatch('router/setPath', t.name)
     }
 
     // 其他menu设置false
@@ -57,6 +46,7 @@ export default {
 
     return {
       menu,
+      pathName,
       gotoRouter,
       openChild
     }
@@ -66,21 +56,25 @@ export default {
 
 <style lang="scss" scoped>
 .left-menu-contanier {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 80px - 60px);
   background-color: #e8e8e8;
   .menu-name {
     height: 40px;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
+    margin: 0;
     &.menu-child {
-      padding-left: 20px;
+      padding-left: 50px;
       &:hover {
         background-color: #e1e1e1;
       }
     }
     &.active {
       background-color: #c1c1c1 !important;
+      &.menu-child {
+        background-color: #d3d3d3 !important;
+      }
     }
   }
   .menu-child-content {
