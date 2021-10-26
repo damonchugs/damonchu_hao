@@ -3,7 +3,7 @@
     <div v-for="(t, index) in menu" :key="`left-menu_${index}`">
       <p :class="`menu-name menu-parent ${t.open ? 'active' : ''}`" @click="openChild(menu, t)">{{ t.name }}</p>
       
-      <div :class="`menu-child-content ${t.open ? 'height-auto' : ''}`">
+      <div class="menu-child-content" :style="`height: ${t.open ? t.children.length * 40 : 0}px;`">
         <p v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`" :class="`menu-name menu-child ${te.open ? 'active' : ''}`" @click="gotoRouter(menu, index, te)">{{ t.name }}</p>
       </div>
     </div>
