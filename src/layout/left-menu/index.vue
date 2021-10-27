@@ -2,7 +2,7 @@
   <div class="left-menu">
     <div class="logo">DamonChu-hao</div>
     <Menu />
-    <div class="left-menu-bottom">沪123456</div>
+    <div class="left-menu-bottom">Vue3-Demo</div>
   </div>
 </template>
 

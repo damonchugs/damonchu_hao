@@ -8,7 +8,7 @@ const name = 'DamonChu_Hao' // page title
 module.exports = {
   //baseUrl从 Vue CLI 3.3 起已弃用，请使用publicPath。
   publicPath: './',
-  outputDir: 'damonchu_hao',//默认值为dist，构建输出目录，若打包时不改会覆盖之前版本
+  outputDir: 'hao',//默认值为dist，构建输出目录，若打包时不改会覆盖之前版本
   // assetsDir: 'assets',//默认为'',静态文件目录(css,img,js,fonts)
   lintOnSave: false,//默认true，开启会降低执行效率，用途是eslint检测代码，可选值：true,false,'error'，当为true时检测代码，出现错误时提示信息会输出到命令行，不会编译失败；为'error',出现错误编译会失败
   devServer:{
