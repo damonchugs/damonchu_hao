@@ -21,19 +21,19 @@ export default {
 
     const menu = ref(router)
 
+    // 父级目录选择
+    const openChild = (menu, t) => {
+      t.open = !t.open
+      otherMenuSet(menu, t.name)
+      store.dispatch('router/setPath', t.name)
+    }
+
     // 子目录选择
     const gotoRouter = (menu, index, te) => {
       // this.$route.push({ path: menu[index].src + '/' + te.src })
       te.open = !te.open
       menu[index].children.filter(t => te.name !== t.name).map(tem => tem.open = false)
       store.dispatch('router/setPath', `${pathName.value.split('/')[0].trim()} / ${te.name}`)
-    }
-
-    // 父级目录选择
-    const openChild = (menu, t) => {
-      t.open = !t.open
-      otherMenuSet(menu, t.name)
-      store.dispatch('router/setPath', t.name)
     }
 
     // 其他menu设置false

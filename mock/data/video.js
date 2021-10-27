@@ -1,6 +1,7 @@
 const video_tab = [
   {
     name: '视频网站',
+    src: 'videoweb',
     hao: [
       { name: 'Bilibili', href: 'https://www.bilibili.com/', description: '哔哩哔哩 (゜-゜)つロ 干杯~-bilibili' },
       { name: 'AcFun', href: 'https://www.acfun.cn/', description: 'AcFun是国内首家弹幕视频网站，这里有全网独家动漫新番， 友好的弹幕氛围，有趣的UP主，好玩有科技感的虚拟偶像，年轻人都在用。' },
@@ -10,20 +11,25 @@ const video_tab = [
   },
   {
     name: '电影下载',
+    src: 'download',
     hao: [
       { name: '电影天堂吧', href: 'http://www.dytt8.net/', description: '电影天堂吧' },
       { name: '电影天堂', href: 'http://www.dy2018.com/', description: '电影天堂' },
       { name: '磁力熊', href: 'https://www.cilixiong.com/', description: '纯净的1080P高分电影磁力下载站' }
     ]
+  },
+  {
+    name: '字幕组',
+    src: 'zimu',
+    hao: [{ name: '电影天堂吧', href: 'http://www.dytt8.net/', description: '电影天堂吧' }]
   }
 ]
-
 export default [
   {
     url: '/video',
     type: 'get',
     response: () => {
-      return video_tab
+      return { name: '影视娱乐', src: 'video', tab: video_tab }
     }
   }
 ]

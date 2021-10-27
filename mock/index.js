@@ -1,8 +1,8 @@
 // 使用 Mock
 import Mock from 'mockjs'
 
-import web from './role/web'
-import video from './role/video'
+import web from './data/web'
+import video from './data/video'
 
 const mocks = [
   ...web, ...video
@@ -14,6 +14,16 @@ const mocks = [
 const responseFake = (url, type, respond) => {
   Mock.mock(`/mock${url}`, type, respond)
 }
+
+// for (let key in mocks) {
+//   mocks[key].tab.map(route => {
+//     return responseFake(route.url, route.type, route.response)
+//   })
+// }
+
+// Mock.mock(`/mock/menu`, 'get', mocks)
+
+export { mocks }
 
 export default mocks.map(route => {
   return responseFake(route.url, route.type, route.response)
