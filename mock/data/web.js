@@ -32,7 +32,17 @@ const web_tab = [
       { name: 'Color Drop', href: 'https://colordrop.io/', description: 'Color Drop' },
       { name: '设计师导航', href: 'https://color.uisdc.com/pick.html', description: '每周更新，一网打尽' }
     ]
-  }
+  },
+  {
+    name: '字体导航',
+    src: 'font',
+    hao: [
+      { name: '有字体', href: 'https://www.webfont.com/', description: '在线云字体，简单易用，阿里云cdn' },
+      { name: 'wordmark', href: 'https://wordmark.it/', description: '展示系统字体样式' },
+      { name: '字体传奇', href: 'http://www.ziticq.com/', description: '有免费，有商用字体' },
+      { name: '图翼', href: 'http://www.tuyiyi.com/show-79', description: 'UI网页字体' }
+    ]
+  },
 ]
 export default [
   {

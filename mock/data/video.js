@@ -21,7 +21,10 @@ const video_tab = [
   {
     name: '字幕组',
     src: 'zimu',
-    hao: [{ name: '电影天堂吧', href: 'http://www.dytt8.net/', description: '电影天堂吧' }]
+    hao: [
+      { name: '射手网', href: 'http://assrt.net/', description: '射手网（伪）' },
+      { name: 'Subhd', href: 'http://www.subhd.cc/', description: '影视资料字幕' },
+    ]
   }
 ]
 export default [
