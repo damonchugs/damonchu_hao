@@ -20,5 +20,6 @@ export default {
   height: calc(100vh - 80px);
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #f8f8f8;
 }
 </style>
