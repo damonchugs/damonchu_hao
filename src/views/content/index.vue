@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div v-for="(t, index) in hao_data" :key="`hao_tab_${index}`" class="hao_tab">
+    <div v-for="(t, index) in hao_data" :key="`hao_tab_${index}`" class="hao_tab" :id="`hao_tab-${t.src}`">
         <Divider orientation="left" style="border-color: #7cb305" dashed>{{ t.name }}</Divider>
 
         <div class="href_tab_div">

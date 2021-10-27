@@ -34,6 +34,7 @@ export default {
       te.open = !te.open
       menu[index].children.filter(t => te.name !== t.name).map(tem => tem.open = false)
       store.dispatch('router/setPath', `${pathName.value.split('/')[0].trim()} / ${te.name}`)
+      naver(te.src)
     }
 
     // 其他menu设置false
@@ -42,6 +43,14 @@ export default {
         temp.open = false
         temp.children.map(tem => tem.open = false)
       })
+    }
+
+    // 跳转锚点
+    const naver = (id) => {
+      const obj = document.getElementById(`hao_tab-${id}`);
+      const obj_scroll = document.getElementsByClassName('right-content-content')[0]
+      const oPos = obj.offsetTop
+      return obj_scroll.scrollTo(0, oPos - 80 - 10)
     }
 
     return {
