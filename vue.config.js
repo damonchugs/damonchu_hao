@@ -3,7 +3,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = 'damonchu_hao' // page title
+const name = 'DamonChu_Hao' // page title
 
 module.exports = {
   //baseUrl从 Vue CLI 3.3 起已弃用，请使用publicPath。

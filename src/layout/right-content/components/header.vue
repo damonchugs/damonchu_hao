@@ -3,17 +3,24 @@
     <div class="tab-name">{{ pathName }}</div>
 
     <div class="set">
-      <p @click="reflashPage">刷新</p>
-      <p>设置</p>
+      <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex';
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+
+import {
+  SyncOutlined,
+} from '@ant-design/icons-vue';
+
 export default {
+  components: { SyncOutlined },
   setup () {
+    let loading = ref(false)
+    
     const store = useStore()
     let pathName = computed(() => store.state.router.path)
 
@@ -24,6 +31,7 @@ export default {
 
     return {
       pathName,
+      loading,
       reflashPage
     }
   }
