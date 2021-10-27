@@ -32,8 +32,10 @@ const hao_data = ref([])
 // 监听地址，刷新页面数据
 watch(pathName, (val, new_val) => {
   if (new_val.trim().split('/')[0] !== val.trim().split('/')[0]) {
-    const src = route.value.find(t => t.open).src
-    getTabData(src)
+    const src = route.value.find(t => t.open)?.src || null
+    if (src) {
+      getTabData(src)
+    }
   }
 })
 
@@ -44,7 +46,7 @@ onMounted(()=>{
 // 获取tab_data
 const getTabData = (url) => {
   axios.get(`/mock/${url}`).then(response => {
-    hao_data.value = response.data
+    hao_data.value = response.data.tab
   })
 }
 
@@ -57,9 +59,12 @@ const gotoHref = (src) => {
 <style lang="scss" scoped>
 .app-container {
   text-align: left;
-  padding: 20px;
+  padding: 10px;
   .hao_tab {
     margin-bottom: 30px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
     .href_tab_div {
       display: flex;
       flex-wrap: wrap;
