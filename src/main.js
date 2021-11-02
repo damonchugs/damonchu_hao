@@ -5,6 +5,9 @@ import store from './store'
 // mock数据
 require('/mock/index.js')
 
+// 添加setting
+require('./setting.js')
+
 // 引入图标
 // import * as Icon from '@ant-design/icons-vue'
 

@@ -23,6 +23,8 @@ export default {
     line-height: 80px;
     color: white;
     background-color: #595959;
+    font-family: 'ChannelSlanted2';
+    // font-size: 34px;
   }
   .left-menu-bottom {
     height: 60px;
