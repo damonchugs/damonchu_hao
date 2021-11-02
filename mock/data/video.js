@@ -7,6 +7,7 @@ const video_tab = [
       { name: 'AcFun', href: 'https://www.acfun.cn/', description: 'AcFun是国内首家弹幕视频网站，这里有全网独家动漫新番， 友好的弹幕氛围，有趣的UP主，好玩有科技感的虚拟偶像，年轻人都在用。' },
       { name: '美剧星球', href: 'https://meijuxingqiu.net/', description: '比起看剧，小破球更想陪你一起看更广阔的世界！' },
       { name: '奈菲影视', href: 'https://www.nfmovies.com/', description: '奈非copy' },
+      { name: '奈落影视', href: 'https://www.newfii.com/', description: '奈落影视' },
     ]
   },
   {

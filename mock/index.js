@@ -3,9 +3,10 @@ import Mock from 'mockjs'
 
 import web from './data/web'
 import video from './data/video'
+import bbs from './data/bbs'
 
 const mocks = [
-  ...web, ...video
+  ...web, ...video, ...bbs
 ]
 
 // Mock.mock('/api/web', 'post', web);
