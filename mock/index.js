@@ -1,13 +1,18 @@
 // 使用 Mock
 import Mock from 'mockjs'
+// 获取文件
+const mocks = []
 
-import web from './data/web'
-import video from './data/video'
-import bbs from './data/bbs'
+const modulesFiles = require.context('./data', false, /\.js$/)
+modulesFiles.keys().reduce((modules, modulePath) => {
+  // const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  // modules[moduleName] = value.default
+  mocks.push(value.default[0])
+  return modules
+}, {})
 
-const mocks = [
-  ...web, ...video, ...bbs
-]
+mocks.reverse()
 
 // Mock.mock('/api/web', 'post', web);
 
