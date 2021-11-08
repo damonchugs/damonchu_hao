@@ -1,5 +1,21 @@
 const entertainment_tab = [
   {
+    name: '软件资源',
+    src: 'application',
+    hao: [
+      { name: '青涩的猫', href: 'https://yiwa.tv/', description: 'windows和mac资源' },
+      { name: '扩展迷', href: 'https://www.extfans.com/', description: 'Chrome插件扩展下载网' },
+    ]
+  },
+  {
+    name: '网页工具',
+    src: 'application',
+    hao: [
+      { name: 'Receive SMS Online', href: 'https://smsreceivefree.com/', description: 'Temporary and disposable phone numbers, always free(暂时的,一次性电话号码,总是免费的)' },
+      { name: '猿料', href: 'https://yuanliao.info/', description: '猿料 , 一个有想法的社区（utools）' },
+    ]
+  },
+  {
     name: '识图搜索',
     src: 'entertainmentweb',
     hao: [
