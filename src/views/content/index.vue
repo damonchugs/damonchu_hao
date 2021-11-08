@@ -76,6 +76,7 @@ const gotoHref = (src) => {
         max-width: 280px;
         cursor: pointer;
         margin-bottom: 15px;
+        overflow-wrap: break-word;
         p {
           margin: 0px;
           font-size: 12px;
