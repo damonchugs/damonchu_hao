@@ -46,11 +46,29 @@ export default {
     }
 
     // 跳转锚点
+    let timer = null
     const naver = (id) => {
       const obj = document.getElementById(`hao_tab-${id}`);
       const obj_scroll = document.getElementsByClassName('right-content-content')[0]
-      const oPos = obj.offsetTop
-      return obj_scroll.scrollTo(0, oPos - 80 - 10)
+      const oPos = obj.offsetTop - 80 - 10
+      // return obj_scroll.scrollTo(0, oPos)
+      // 如果已建立定时器，清除定时器
+      if (timer) clearInterval(timer)
+      scrollAnimation(obj_scroll, oPos, 1000 / 120)
+    }
+
+    // 匀速动画 - 跳转锚点
+    const scrollAnimation = (obj, Pos, time) => {
+      timer = setInterval(() => {
+        var currentY = obj.scrollTop // 当前及滑动中任意时刻位置
+        var distance = Pos > currentY ? Pos - currentY : currentY - Pos; // 剩余距离
+        var speed = Math.ceil(distance / time); // 每时刻速度
+        if (currentY === Pos) {
+          clearInterval(timer)
+        } else {
+          obj.scrollTo(0, Pos > currentY ? currentY + speed : currentY - speed);
+        }
+      }, 10);
     }
 
     return {
