@@ -8,7 +8,7 @@ modulesFiles.keys().reduce((modules, modulePath) => {
   // const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
   const value = modulesFiles(modulePath)
   // modules[moduleName] = value.default
-  mocks.push(value.default[0])
+  mocks.push(value.default)
   return modules
 }, {})
 
