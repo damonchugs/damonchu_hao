@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
     <div v-for="(t, index) in hao_data" :key="`hao_tab_${index}`" class="hao_tab" :id="`hao_tab-${t.src}`">
-        <Divider orientation="left" style="border-color: #7cb305" dashed>{{ t.name }}</Divider>
+        <Divider orientation="left" style="border-color: #7cb305" dashed>
+          {{ t.name }}
+          <span style="font-size: 12px;">{{ t.subtitle ? ` - ${t.subtitle}` : '' }}</span>
+        </Divider>
 
         <div class="href_tab_div">
           <div v-for="(te, inv) in t.hao" :key="`href_${inv}`" class="href_tab" @click="gotoHref(te.href)">
@@ -23,30 +26,36 @@ import { useStore } from 'vuex'
 // 请求数据
 import axios from 'axios'
 
-const store = useStore()
+const store = useStore();
 
-const pathName = computed(() => store.state.router.path)
-const route = computed(() => store.state.router.router)
-const hao_data = ref([])
+const pathName = computed(() => store.state.router.path);
+const route = computed(() => store.state.router.router);
+const subject = computed(() => store.state.router.subject);
+const hao_data = ref([]);
 
 // 监听地址，刷新页面数据
 watch(pathName, (val, new_val) => {
   if (new_val.trim().split('/')[0] !== val.trim().split('/')[0]) {
-    const src = route.value.find(t => t.open)?.src || null
+    const src = route.value.find(t => t.open)?.src || null;
     if (src) {
-      getTabData(src)
+      getTabData(src);
     }
   }
 })
 
 onMounted(()=>{
-	getTabData('web')
+  getTabData(subject.value);
 })
 
 // 获取tab_data
 const getTabData = (url) => {
   axios.get(`/mock/${url}`).then(response => {
-    hao_data.value = response.data.tab
+    hao_data.value = response.data.tab;
+
+    
+    // 保存上次浏览专题
+    store.dispatch('router/setSubject', url)
+    localStorage.setItem('dchaoStorage', url);
   })
 }
 
