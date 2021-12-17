@@ -2,6 +2,7 @@ import { mocks } from '../../../mock/index'
 
 // 获取目录
 const route = []
+
 mocks.map(te => {
   const { name, src, tab } = te.response()
   const arr = { name, src, open: false, children: [] }
@@ -10,31 +11,18 @@ mocks.map(te => {
   })
   route.push(arr)
 })
-route[0].open = true
-route[0].children[0].open = true
+
+// 获取上次浏览专题 - 默认第一个专题
+const subject = localStorage.getItem('dchaoStorage') || route[0].src;
+const router = route.find(t => t.src === subject);
+
+router.open = true
+router.children[0].open = true
 
 const state = {
-  path: `${route[0].name} / ${route[0].children[0].name}`,
-  router: route
-  // [
-  //   {
-  //     name: '前端学习', src: 'web', open: true,
-  //     children: [
-  //       { name: '前端论坛', src: 'bbs', open: true },
-  //       { name: '代码hub', src: 'hub', open: false },
-  //       { name: '大牛博客', src: 'blog', open: false },
-  //       { name: '配色导航', src: 'color', open: false },
-  //     ]
-  //   },
-  //   {
-  //     name: '影视娱乐', src: 'video', open: false,
-  //     children: [
-  //       { name: '视频网站', src: 'videoweb', open: false },
-  //       { name: '电影下载', src: 'download', open: false },
-  //       { name: '字幕组', src: 'zimu', open: false },
-  //     ]
-  //   },
-  // ]
+  subject,
+  path: `${router.name} / ${router.children[0].name}`,
+  router: route,
 }
 
 const mutations = {
@@ -43,12 +31,18 @@ const mutations = {
   },
   GETROUTER (state) {
     return state.router
+  },
+  SETSUBJECT (state, src) {
+    state.subject = src
   }
 }
 
 const actions = {
   setPath ({ commit }, path) {
     commit('SETPATH', path)
+  },
+  setSubject ({ commit }, src) {
+    commit('SETSUBJECT', src)
   },
   getRouter({ state }) {
     return new Promise((resolve, reject) => {
