@@ -31,6 +31,7 @@ const bbs_tab = [
       { name: '奇妙', href: 'https://www.golink.com/', description: '优点：免费，缺点：稳定性随缘' },
       { name: '流星', href: 'https://www.liuxing.com/', description: '优点：免费，缺点：稳定性随缘-较差' },
       { name: '猫灵', href: 'https://www.baidu.com/s?wd=%E7%8C%AB%E7%81%B5%E5%8A%A0%E9%80%9F%E5%99%A8', description: '优点：免费，缺点：无官网，稳定性？' },
+      { name: '红星加速器', href: 'https://redstarv.com/', description: '比快更快比稳更稳，多平台通用，每一个平台都是基于同一内核，速度，稳定，安全表现同样出色。目前支持macOS，Windows，HarmonyOS，Android，iOS版本即将上线。' },
     ]
   }
 ]

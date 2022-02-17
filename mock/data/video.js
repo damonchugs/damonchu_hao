@@ -8,12 +8,14 @@ const video_tab = [
       { name: '美剧星球', href: 'https://meijuxingqiu.net/', description: '比起看剧，小破球更想陪你一起看更广阔的世界！' },
       { name: '奈菲影视', href: 'https://www.nfmovies.com/', description: '奈非copy' },
       { name: '奈落影视', href: 'https://www.newfii.com/', description: '奈落影视' },
+      { name: '北川影视', href: 'https://i.bcwzg.com/', description: '北川影视' },
     ]
   },
   {
     name: '电影下载',
     src: 'download',
     hao: [
+      { name: '迅雷下载', href: 'https://xunlei8.cc/', description: '迅雷下载' },
       { name: '电影天堂吧', href: 'http://www.dytt8.net/', description: '电影天堂吧' },
       { name: '电影天堂', href: 'http://www.dy2018.com/', description: '电影天堂' },
       { name: '磁力熊', href: 'https://www.cilixiong.com/', description: '纯净的1080P高分电影磁力下载站' }
