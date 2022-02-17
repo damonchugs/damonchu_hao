@@ -15,7 +15,7 @@ module.exports = {
     open: true,//服务开启后直接在浏览器中打开主页面
     // host: 'localhost',//主机名
     port: 4369,//端口号
-    https: true,//是否开启https
+    https: false,//是否开启https
     hotOnly: true,//是否开启热模块更新
     // proxy:{
     //   //配置跨域,可参见官方文档https://webpack.js.org/configuration/dev-server/#devserverproxy
