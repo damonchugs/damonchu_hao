@@ -51,7 +51,6 @@ onMounted(()=>{
 const getTabData = (url) => {
   axios.get(`/mock/${url}`).then(response => {
     hao_data.value = response.data.tab;
-
     
     // 保存上次浏览专题
     store.dispatch('router/setSubject', url)
