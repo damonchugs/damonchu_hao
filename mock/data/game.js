@@ -16,6 +16,8 @@ const bbs_tab = [
       { name: 'FGO手册', href: 'http://fgo.vgtime.com/', description: '《Fate/Grand Order》是由TYPE-MOON推出智能手机专用的角色扮演游戏。国服由B站代理，中文名为《命运-冠位指定》。' },
       { name: 'FGOwiki', href: 'https://fgo.wiki/w/%E9%A6%96%E9%A1%B5', description: '欢迎来到Mooncell！' },
       { name: 'DarkSouls', href: 'https://leminerva.github.io/Dark-Souls-Documents/index.html', description: '黑暗之魂系列文本与数据档案。' },
+      { name: 'Elden Ring', href: 'https://app.gamersky.com/db/eldenring/?lat=-197&lng=102&zoom=6', description: '老头环互动收集地图，找路寻物好帮手。' },
+      { name: 'Elden Ring Online Map', href: 'https://www.elpwc.com/eldenringmap/#/', description: '老头环互动收集地图，找路寻物好帮手。(详细)' }
     ]
   },
   {
