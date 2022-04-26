@@ -1,3 +1,4 @@
-node_modules
-damonchu_hao
-hao
+.DS_Store
+node_modules/
+hao/
+
