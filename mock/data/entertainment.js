@@ -1,5 +1,12 @@
 const entertainment_tab = [
   {
+    name: '厨房菜谱',
+    src: 'kitchen',
+    hao: [
+      { name: '下厨房', href: 'https://www.xiachufang.com/', description: '家常菜快手菜下饭菜早餐肉鱼全部菜谱分类 菜谱榜单 打开APP看排行榜 发现新菜 新创建的菜谱,编辑每日精选 视频菜谱 视频详解操作流程,想失败都难 新秀菜谱' }
+    ]
+  },
+  {
     name: '软件资源',
     src: 'application',
     hao: [

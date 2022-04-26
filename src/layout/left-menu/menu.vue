@@ -1,10 +1,21 @@
 <template>
-  <div class="left-menu-contanier">
+  <div class="left-menu-contanier" :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${BackgroundColor.split(',')[3]}`">
     <div v-for="(t, index) in menu" :key="`left-menu_${index}`">
-      <p :class="`menu-name menu-parent ${t.open ? 'active' : ''}`" @click="openChild(menu, t)">{{ t.name }}</p>
+      <p
+        :class="`menu-name menu-parent ${t.open ? 'active' : ''}`"
+        :style="`background-color: ${t.open ? BackgroundColor.split(',')[1] : ''};`"
+        @click="openChild(menu, t)">
+        {{ t.name }}
+      </p>
       
       <div class="menu-child-content" :style="`height: ${t.open ? t.children.length * 40 : 0}px;`">
-        <p v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`" :class="`menu-name menu-child ${te.open ? 'active' : ''}`" @click="gotoRouter(menu, index, te)">{{ te.name }}</p>
+        <p
+          v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`"
+          :class="`menu-name menu-child ${te.open ? 'active' : ''}`"
+          :style="`background-color: ${te.open ? BackgroundColor.split(',')[2] : ''};`"
+          @click="gotoRouter(menu, index, te)">
+          {{ te.name }}
+        </p>
       </div>
     </div>
   </div>
@@ -20,6 +31,11 @@ export default {
     let pathName = computed(() => store.state.router.path)
 
     const menu = ref(router)
+
+    /* 颜色设置 */
+    const ThemeColor = computed(() => store.getters.ThemeColor)
+    const ThemeOptions = computed(() => store.getters.ThemeOptions)
+    const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[1])
 
     // 父级目录选择
     const openChild = (menu, t) => {
@@ -78,6 +94,7 @@ export default {
     return {
       menu,
       pathName,
+      BackgroundColor,
       gotoRouter,
       openChild
     }
@@ -88,23 +105,25 @@ export default {
 <style lang="scss" scoped>
 .left-menu-contanier {
   height: calc(100vh - 80px - 60px);
-  background-color: #e8e8e8;
   .menu-name {
     height: 40px;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
     margin: 0;
+    transition: padding .5s;
     &.menu-child {
       padding-left: 50px;
       &:hover {
-        background-color: #e1e1e1;
+        // background-color: #e1e1e1;
+        padding-left: 20px;
       }
     }
     &.active {
-      background-color: #c1c1c1 !important;
+      // background-color: #c1c1c1 !important;
       &.menu-child {
-        background-color: #d3d3d3 !important;
+        //  background-color: #d3d3d3 !important;
+        padding-left: 10px;
       }
     }
   }

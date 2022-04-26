@@ -1,5 +1,5 @@
 <template>
-  <div class="left-menu">
+  <div class="left-menu" :style="`background-color: ${BackgroundColor};`">
     <div class="logo">DamonChu-hao</div>
     <Menu />
     <div class="left-menu-bottom">Vue3-Demo</div>
@@ -7,10 +7,29 @@
 </template>
 
 <script>
+// 引用组件
 import Menu from './menu.vue'
+
+// 引用组件
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
+  name: 'LayoutLeftMenu',
   components: {
     Menu
+  },
+  setup() {
+    const store = useStore()
+
+    /* 颜色设置 */
+    const ThemeColor = computed(() => store.getters.ThemeColor)
+    const ThemeOptions = computed(() => store.getters.ThemeOptions)
+    const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[0])
+
+    return {
+      BackgroundColor
+    }
   }
 }
 </script>
@@ -22,9 +41,7 @@ export default {
     height: 80px;
     line-height: 80px;
     color: white;
-    background-color: #595959;
     font-family: 'ChannelSlanted2';
-    // font-size: 34px;
   }
   .left-menu-bottom {
     height: 60px;
