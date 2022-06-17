@@ -13,6 +13,7 @@ const bbs_tab = [
     name: '游戏手册',
     src: 'gamemanual',
     hao: [
+      { name: 'SteamDB', href: 'https://steamdb.info/', description: 'Database of everything on Steam.' },
       { name: 'FGO手册', href: 'http://fgo.vgtime.com/', description: '《Fate/Grand Order》是由TYPE-MOON推出智能手机专用的角色扮演游戏。国服由B站代理，中文名为《命运-冠位指定》。' },
       { name: 'FGOwiki', href: 'https://fgo.wiki/w/%E9%A6%96%E9%A1%B5', description: '欢迎来到Mooncell！' },
       { name: 'DarkSouls', href: 'https://leminerva.github.io/Dark-Souls-Documents/index.html', description: '黑暗之魂系列文本与数据档案。' },

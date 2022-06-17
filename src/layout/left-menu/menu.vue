@@ -83,7 +83,7 @@ export default {
         var distance = Pos > currentY ? Pos - currentY : currentY - Pos; // 剩余距离
         var speed = Math.ceil(distance / time); // 每时刻速度
         
-        if (currentY === Pos || currentY === obj.clientHeight) {
+        if (Math.ceil(currentY) === Pos || Math.ceil(currentY) === obj.clientHeight) {
           clearInterval(timer)
         } else {
           obj.scrollTo(0, Pos > currentY ? currentY + speed : currentY - speed);

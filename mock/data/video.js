@@ -9,6 +9,7 @@ const video_tab = [
       { name: '奈菲影视', href: 'https://www.nfmovies.com/', description: '奈非copy' },
       { name: '奈落影视', href: 'https://www.newfii.com/', description: '奈落影视' },
       { name: '北川影视', href: 'https://i.bcwzg.com/', description: '北川影视' },
+      { name: '555电影', href: 'https://www.555dianying.cc/', description: '555电影DY' },
     ]
   },
   {
