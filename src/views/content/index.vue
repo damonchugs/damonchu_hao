@@ -45,16 +45,19 @@ watch(pathName, (val, new_val) => {
 
 onMounted(()=>{
   getTabData(subject.value);
+  console.log(111)
 })
 
 // 获取tab_data
 const getTabData = (url) => {
+  console.log(333)
   axios.get(`/mock/${url}`).then(response => {
     hao_data.value = response.data.tab;
     
     // 保存上次浏览专题
     store.dispatch('router/setSubject', url)
     localStorage.setItem('dchaoStorage', url);
+    console.log(222)
   })
 }
 
