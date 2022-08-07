@@ -1,5 +1,15 @@
 const entertainment_tab = [
   {
+    name: '购物消费',
+    src: 'shopping',
+    hao: [
+      { name: '淘宝', href: 'https://www.taobao.com/', description: '上天猫' },
+      { name: '京东', href: 'https://jd.com/', description: '狗东' },
+      { name: '华为商城', href: 'https://www.vmall.com/', description: '菊花标' },
+      { name: '小米商城', href: 'https://www.mi.com/shop', description: 'MI' },
+    ]
+  },
+  {
     name: '厨房菜谱',
     src: 'kitchen',
     hao: [

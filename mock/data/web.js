@@ -13,6 +13,14 @@ const web_tab = [
     ]
   },
   {
+    name: '云服务',
+    src: 'yunserver',
+    hao: [
+      { name: '腾讯云', href: 'https://cloud.tencent.com/', description: '微信+云是真的好用。' },
+      { name: '阿里云', href: 'https://www.aliyun.com/', description: '支付宝+云体验有点差。' },
+    ]
+  },
+  {
     name: '前端论坛',
     src: 'bbs',
     hao: [
@@ -28,6 +36,16 @@ const web_tab = [
     hao: [
       { name: 'Github', href: 'https://github.com/damonchugs', description: '国外代码托管平台' },
       { name: 'Gitee', href: 'https://gitee.com/', description: '国内代码托管平台' },
+    ]
+  },
+  {
+    name: '前端框架',
+    src: 'webframe',
+    hao: [
+      { name: 'ElmentUI', href: 'https://element-plus.gitee.io/zh-CN/', description: '饿了么框架，首页VUE3+国内' },
+      { name: 'antd', href: 'https://ant-design.gitee.io/index-cn', description: '阿里框架' },
+      { name: 'uniapp', href: 'https://uniapp.dcloud.net.cn/', description: '手机端适配' },
+      { name: '微信公众平台', href: 'https://mp.weixin.qq.com/', description: '微信公众平台：公众号，小程序，小游戏。' },
     ]
   },
   {
