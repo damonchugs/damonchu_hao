@@ -1,5 +1,9 @@
 <template>
   <div class="right-content-header" :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${BackgroundColor.split(',')[1]};`">
+    <div class="menu-toggle" @click="MenuToggleClick">
+      <MenuFoldOutlined v-if="PhoneMenuToggle" />
+      <MenuUnfoldOutlined v-else />
+    </div>
     <div class="tab-name">{{ pathName }}</div>
 
     <div class="set">
@@ -36,11 +40,11 @@ import { Group, RadioButton } from 'ant-design-vue/lib/radio'
 import "ant-design-vue/lib/radio/style/css"
 
 import {
-  SyncOutlined, SettingOutlined
+  SyncOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined
 } from '@ant-design/icons-vue';
 
 export default {
-  components: { SyncOutlined, SettingOutlined, Drawer, Group, RadioButton },
+  components: { SyncOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined, Drawer, Group, RadioButton },
   setup () {
     let loading = ref(false)
     const DrawerVal = ref({
@@ -56,6 +60,12 @@ export default {
     const ThemeColor = computed(() => store.getters.ThemeColor)
     const ThemeOptions = computed(() => store.getters.ThemeOptions)
     const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[2])
+
+    /* 目录展开/收缩 */
+    const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle)
+    const MenuToggleClick = () => {
+      store.dispatch('setting/SetMenuToggle')
+    }
 
     // 刷新
     const reflashPage = () => {
@@ -85,10 +95,12 @@ export default {
       DrawerVal,
       ThemeColor,
       BackgroundColor,
+      PhoneMenuToggle,
       reflashPage,
       drawerClose,
       SettingBackground,
-      ChangeThemeColor
+      ChangeThemeColor,
+      MenuToggleClick
     }
   }
 }
@@ -108,6 +120,18 @@ export default {
       margin-bottom: 0;
       font-size: 16px;
     }
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 80px;
+    font-size: 20px;
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .right-content-header .menu-toggle {
+    display: block;
   }
 }
 </style>

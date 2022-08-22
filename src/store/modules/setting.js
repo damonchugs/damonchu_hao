@@ -9,12 +9,19 @@ const state = {
       { value: 'light', colors: '#595959|#e8e8e8,#c1c1c1,#d3d3d3,#000000|#bcbcbc,#000000' },
       { value: 'dark', colors: '#000000|#001529,#096dd9,#1890ff,#ffffff|#001529,#ffffff' },
     ]
+  },
+  isPhone: window.screen.width <= 500,
+  menu: {
+    toggle: false,
   }
 }
 
 const mutations = {
   SET_COLOR_VALUE(state, payload) {
     state.color.value = payload
+  },
+  SET_MENU_TOGGLE(state) {
+    state.menu.toggle = !state.menu.toggle
   }
 }
 
@@ -23,6 +30,9 @@ const actions = {
   SetColorValue({ commit }, payload) {
     localStorage.setItem('DamonchuHaoTheme', payload)
     commit('SET_COLOR_VALUE', payload)
+  },
+  SetMenuToggle({ commit }) {
+    commit('SET_MENU_TOGGLE')
   }
 }
 

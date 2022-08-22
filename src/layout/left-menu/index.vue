@@ -1,8 +1,9 @@
 <template>
-  <div class="left-menu" :style="`background-color: ${BackgroundColor};`">
+  <div class="left-menu" :style="`background-color: ${BackgroundColor}; left: ${IsPhone && !PhoneMenuToggle ? '-100vw' : '0px'}`">
     <div class="logo">DamonChu-hao</div>
     <Menu />
     <div class="left-menu-bottom">Vue3-Demo</div>
+    <div class="mask" @click="MenuMaskClick" :style="`display: ${IsPhone ? 'block' : 'none'}; opacity: ${PhoneMenuToggle ? 0.6 : 0};`"></div>
   </div>
 </template>
 
@@ -27,8 +28,17 @@ export default {
     const ThemeOptions = computed(() => store.getters.ThemeOptions)
     const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[0])
 
+    const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle)
+    const IsPhone = computed(() => store.getters.IsPhone)
+    const MenuMaskClick = () => {
+      store.dispatch('setting/SetMenuToggle')
+    }
+
     return {
-      BackgroundColor
+      BackgroundColor,
+      PhoneMenuToggle,
+      IsPhone,
+      MenuMaskClick,
     }
   }
 }
@@ -37,6 +47,9 @@ export default {
 <style lang="scss" scoped>
 .left-menu {
   width: 200px;
+  transition: left .2s;
+  position: relative;
+  z-index: 3;
   .logo {
     height: 80px;
     line-height: 80px;
@@ -49,5 +62,23 @@ export default {
     color: #707070;
     background-color: #fbfbfb;
   }
+  .mask {
+    width: calc(100vw - 200px);
+    height: 100vh;
+    position: absolute;
+    right: calc(200px - 100vw);
+    top: 0px;
+    z-index: 2;
+    background-color: rgb(0,0,0);
+    opacity: 0.6;
+    transition: opacity 1s;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .left-menu {
+    position: fixed;
+  }
+
 }
 </style>
