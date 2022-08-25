@@ -21,6 +21,20 @@ const web_tab = [
     ]
   },
   {
+    name: '地图服务',
+    src: 'yunserver',
+    hao: [
+      { name: '北斗地图', href: 'http://www.beidou.gov.cn/', description: '自研自研。' },
+      { name: '百度地图', href: 'https://lbsyun.baidu.com/', description: '国内比较一下算最好的地图了。' },
+      { name: '腾讯地图', href: 'https://lbs.qq.com/', description: '腾讯地图就那样吧。一般微信小程序才会用。' },
+      { name: '高德地图', href: 'https://lbs.amap.com/', description: '高德地图，还行。' },
+      { name: 'Google地图', href: 'https://developers.google.com/maps', description: '全世界范围内最好的地图了，百度高德都得学习的。国内无法访问，痛，太痛了！' },
+      { name: 'Leaflet', href: 'https://leafletjs.com/', description: '国内可访问，an open-source JavaScript library for mobile-friendly interactive maps' },
+      { name: 'MapBox中文', href: 'http://www.mapbox.cn/', description: 'Mapbox是开发人员的地图平台。在我们简单而强大的API上构建地图和应用程序，并使用我们的开源库进行交互和控制。' },
+      { name: 'MapBox', href: 'https://docs.mapbox.com/', description: 'Examples, tutorials, and API references to help you start building with Mapbox.' },
+    ]
+  },
+  {
     name: '前端论坛',
     src: 'bbs',
     hao: [
