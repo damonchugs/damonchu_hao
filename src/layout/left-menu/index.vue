@@ -75,7 +75,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1000px) {
   .left-menu {
     position: fixed;
   }

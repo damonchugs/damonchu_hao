@@ -1,7 +1,3 @@
-// function GetColor() {
-//   return localStorage.getItem('DamonchuHaoTheme') || 'light'
-// }
-
 const state = {
   color: {
     value: localStorage.getItem('DamonchuHaoTheme') || 'light',
@@ -10,7 +6,7 @@ const state = {
       { value: 'dark', colors: '#000000|#001529,#096dd9,#1890ff,#ffffff|#001529,#ffffff' },
     ]
   },
-  isPhone: window.screen.width <= 500,
+  isPhone: window.screen.width <= 1000,
   menu: {
     toggle: false,
   }

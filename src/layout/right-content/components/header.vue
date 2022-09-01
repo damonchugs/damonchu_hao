@@ -129,7 +129,7 @@ export default {
     display: none;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1000px) {
   .right-content-header .menu-toggle {
     display: block;
   }

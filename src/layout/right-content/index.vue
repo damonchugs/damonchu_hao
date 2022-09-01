@@ -21,7 +21,7 @@ export default {
   width: calc(100vw - 200px);
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1000px) {
   .right-content {
     width: 100%;
   }
