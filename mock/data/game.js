@@ -7,6 +7,7 @@ const bbs_tab = [
       { name: '3DM', href: 'https://www.3dmgame.com/', description: '3DM游戏网为玩家提供最新的游戏新闻、攻略、单机游戏资源、汉化资源、游戏补丁、游戏论坛等,经过多年努力已成为游戏玩家首要选择的游戏资讯、游戏资源网站。' },
       { name: '杉果游戏', href: 'https://www.sonkwo.cn/', description: '全方位正版游戏服务平台,提供正版低价游戏激活码,游戏预售、游戏促销折扣、免费游戏、游戏周边等游戏激活及周边购买服务,还有好玩的游戏推荐、游戏评测、游戏新闻资...' },
       { name: 'NGA', href: 'https://bbs.nga.cn/', description: '艾泽拉斯国家地理ヽ(ﾟ∀ﾟ)ﾒ(ﾟ∀ﾟ)ﾉ ' },
+      { name: 'NGA', href: 'https://nga.178.com/', description: '艾泽拉斯国家地理ヽ(ﾟ∀ﾟ)ﾒ(ﾟ∀ﾟ)ﾉ ，另一个' },
     ]
   },
   {
