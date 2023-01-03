@@ -7,6 +7,7 @@ const entertainment_tab = [
       { name: '京东', href: 'https://jd.com/', description: '狗东' },
       { name: '华为商城', href: 'https://www.vmall.com/', description: '菊花标' },
       { name: '小米商城', href: 'https://www.mi.com/shop', description: 'MI' },
+      { name: '火车票', href: 'https://www.12306.cn/', description: '12306火车订票网站' },
     ]
   },
   {

@@ -67,6 +67,7 @@ const web_tab = [
     src: 'blog',
     hao: [
       { name: 'MDN', href: 'https://developer.mozilla.org/zh-CN/', description: '手册很方便' },
+      { name: 'Webpack', href: 'https://webpack.docschina.org/', description: 'Webpack中文文献' },
       { name: '阮一峰网络博客', href: 'http://www.ruanyifeng.com/', description: '前端web技术nginx，node，https等' },
       { name: '廖雪峰网络博客', href: 'https://www.liaoxuefeng.com/', description: '官方网站' },
       { name: '酷 壳', href: 'https://coolshell.cn/', description: '享受编程和技术所带来的快乐 – Coding Your Ambition' },
