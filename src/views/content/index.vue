@@ -99,11 +99,11 @@ const gotoHref = (src) => {
         overflow-wrap: break-word;
         p {
           margin: 0px;
-          font-size: 12px;
+          font-size: $fontSize-12;
           color: #8b8b8b;
           &:first-child {
             margin-bottom: 10px;
-            font-size: 15px;
+            font-size: $fontSize-15;
             color: #656565;
           }
         }

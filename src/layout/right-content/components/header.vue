@@ -1,5 +1,10 @@
 <template>
-  <div class="right-content-header" :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${BackgroundColor.split(',')[1]};`">
+  <div
+    class="right-content-header"
+    :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${
+      BackgroundColor.split(',')[1]
+    };`"
+  >
     <div class="menu-toggle" @click="MenuToggleClick">
       <MenuFoldOutlined v-if="PhoneMenuToggle" />
       <MenuUnfoldOutlined v-else />
@@ -19,80 +24,138 @@
     >
       <p>
         <span>颜色：</span>
-        <Group v-model:value="DrawerVal.value" button-style="solid" @change="ChangeThemeColor">
+        <Group
+          v-model:value="DrawerVal.value"
+          button-style="solid"
+          @change="ChangeThemeColor"
+        >
           <RadioButton value="light">明亮</RadioButton>
           <RadioButton value="dark">暗黑</RadioButton>
         </Group>
       </p>
+      <div>
+        <el-button type="primary" @click="BaseData.visible = true"
+          >登录</el-button
+        >
+      </div>
     </Drawer>
+
+    <!-- <Drawer
+      v-model:visible="BaseData.visible"
+      :title="BaseData.title"
+      :placement="BaseData.direction"
+      width="90%"
+      @after-visible-change="BaseDataClose"
+    >
+      <div class="BaseData-container">
+        <LoginContainer v-if="!BaseData.loginCheck" />
+        <BaseDataContainer v-else />
+      </div>
+    </Drawer> -->
   </div>
 </template>
 
 <script>
 // 引用组件
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 
 // 引用组件
-import Drawer from 'ant-design-vue/lib/drawer'
-import "ant-design-vue/lib/drawer/style/css"
-import { Group, RadioButton } from 'ant-design-vue/lib/radio'
-import "ant-design-vue/lib/radio/style/css"
+import Drawer from "ant-design-vue/lib/drawer";
+import "ant-design-vue/lib/drawer/style/css";
+import { Group, RadioButton } from "ant-design-vue/lib/radio";
+import "ant-design-vue/lib/radio/style/css";
+import LoginContainer from "@/views/login";
+import BaseDataContainer from "@/views/baseData";
 
 import {
-  SyncOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined
-} from '@ant-design/icons-vue';
+  SyncOutlined,
+  SettingOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from "@ant-design/icons-vue";
 
 export default {
-  components: { SyncOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined, Drawer, Group, RadioButton },
-  setup () {
-    let loading = ref(false)
+  components: {
+    SyncOutlined,
+    SettingOutlined,
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
+    Drawer,
+    Group,
+    RadioButton,
+    LoginContainer,
+    BaseDataContainer,
+  },
+  setup() {
+    let loading = ref(false);
     const DrawerVal = ref({
       visible: false,
-      direction: 'right',
-      title: '主题设置',
-      value: 'light'
-    })
-    
-    const store = useStore()
-    let pathName = computed(() => store.state.router.path)
+      direction: "right",
+      title: "主题设置",
+      value: "light",
+    });
+
+    const BaseData = ref({
+      visible: false,
+      direction: "right",
+      title: "",
+      value: "light",
+      loginCheck: () => {
+        return localStorage.getItem("dcHaoLogin");
+      },
+    });
+
+    const store = useStore();
+    let pathName = computed(() => store.state.router.path);
     /* 颜色设置 */
-    const ThemeColor = computed(() => store.getters.ThemeColor)
-    const ThemeOptions = computed(() => store.getters.ThemeOptions)
-    const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[2])
+    const ThemeColor = computed(() => store.getters.ThemeColor);
+    const ThemeOptions = computed(() => store.getters.ThemeOptions);
+    const BackgroundColor = computed(
+      () =>
+        ThemeOptions.value
+          .find((t) => t.value === ThemeColor.value)
+          .colors.split("|")[2]
+    );
 
     /* 目录展开/收缩 */
-    const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle)
+    const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle);
     const MenuToggleClick = () => {
-      store.dispatch('setting/SetMenuToggle')
-    }
+      store.dispatch("setting/SetMenuToggle");
+    };
 
     // 刷新
     const reflashPage = () => {
-      window.location.reload()
-    }
+      window.location.reload();
+    };
 
     // 设置主题 - 弹窗关闭监听
     const drawerClose = () => {
-      DrawerVal.value.viisble = false
-    }
+      DrawerVal.value.viisble = false;
+    };
+
+    // 设置主题 - 弹窗关闭监听
+    const BaseDataClose = () => {
+      BaseData.value.viisble = false;
+    };
 
     // 设置背景颜色 - 打开弹窗
     const SettingBackground = () => {
-      DrawerVal.value.value = ThemeColor.value
-      DrawerVal.value.visible = true
-    }
+      DrawerVal.value.value = ThemeColor.value;
+      DrawerVal.value.visible = true;
+    };
 
     // 设置背景颜色 - 切换模式
     const ChangeThemeColor = (val) => {
-      console.log(val.target.value, 'val.target.value')
-      store.dispatch('setting/SetColorValue', val.target.value)
-    }
+      console.log(val.target.value, "val.target.value");
+      store.dispatch("setting/SetColorValue", val.target.value);
+    };
 
     return {
       pathName,
       loading,
       DrawerVal,
+      BaseData,
       ThemeColor,
       BackgroundColor,
       PhoneMenuToggle,
@@ -100,10 +163,10 @@ export default {
       drawerClose,
       SettingBackground,
       ChangeThemeColor,
-      MenuToggleClick
-    }
-  }
-}
+      MenuToggleClick,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
