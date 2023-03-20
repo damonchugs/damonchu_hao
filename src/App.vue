@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import Layout from './layout/index.vue'
+import Layout from "./layout/index.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Layout
-  }
-}
+    Layout,
+  },
+};
 </script>
 
 <style>
@@ -23,7 +23,6 @@ export default {
 }
 </style>
 
-<style>
-* { margin: 0; padding: 0 }
-body { margin: 0; padding: 0 }
+<style lang="scss">
+@import url(./styles/index.scss);
 </style>
