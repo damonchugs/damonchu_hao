@@ -1,19 +1,34 @@
 <template>
-  <div class="left-menu-contanier" :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${BackgroundColor.split(',')[3]}`">
+  <div
+    class="left-menu-contanier"
+    :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${
+      BackgroundColor.split(',')[3]
+    }`"
+  >
     <div v-for="(t, index) in menu" :key="`left-menu_${index}`">
       <p
         :class="`menu-name menu-parent ${t.open ? 'active' : ''}`"
-        :style="`background-color: ${t.open ? BackgroundColor.split(',')[1] : ''};`"
-        @click="openChild(menu, t)">
+        :style="`background-color: ${
+          t.open ? BackgroundColor.split(',')[1] : ''
+        };`"
+        @click="openChild(menu, t)"
+      >
         {{ t.name }}
       </p>
-      
-      <div class="menu-child-content" :style="`height: ${t.open ? t.children.length * 40 : 0}px;`">
+
+      <div
+        class="menu-child-content"
+        :style="`height: ${t.open ? t.children.length * 40 : 0}px;`"
+      >
         <p
-          v-for="(te, inv) in t.children" :key="`left-menu-child_${inv}`"
+          v-for="(te, inv) in t.children"
+          :key="`left-menu-child_${inv}`"
           :class="`menu-name menu-child ${te.open ? 'active' : ''}`"
-          :style="`background-color: ${te.open ? BackgroundColor.split(',')[2] : ''};`"
-          @click="gotoRouter(menu, index, te)">
+          :style="`background-color: ${
+            te.open ? BackgroundColor.split(',')[2] : ''
+          };`"
+          @click="gotoRouter(menu, index, te)"
+        >
           {{ te.name }}
         </p>
       </div>
@@ -22,84 +37,101 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex';
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 export default {
-  setup () {
+  setup() {
     const store = useStore();
-    let router = computed(() => store.state.router.router)
-    let pathName = computed(() => store.state.router.path)
+    let router = computed(() => store.state.router.router);
+    let pathName = computed(() => store.state.router.path);
 
-    const menu = ref(router)
+    const menu = ref(router);
 
     /* 颜色设置 */
-    const ThemeColor = computed(() => store.getters.ThemeColor)
-    const ThemeOptions = computed(() => store.getters.ThemeOptions)
-    const BackgroundColor = computed(() => ThemeOptions.value.find(t => t.value === ThemeColor.value).colors.split('|')[1])
+    const ThemeColor = computed(() => store.getters.ThemeColor);
+    const ThemeOptions = computed(() => store.getters.ThemeOptions);
+    const BackgroundColor = computed(
+      () =>
+        ThemeOptions.value
+          .find((t) => t.value === ThemeColor.value)
+          .colors.split("|")[1]
+    );
 
     // 父级目录选择
     const openChild = (menu, t) => {
-      t.open = !t.open
-      otherMenuSet(menu, t.name)
-      store.dispatch('router/setPath', t.name)
-    }
+      t.open = !t.open;
+      otherMenuSet(menu, t.name);
+      store.dispatch("router/setPath", t.name);
+    };
 
     // 子目录选择
     const gotoRouter = (menu, index, te) => {
       // this.$route.push({ path: menu[index].src + '/' + te.src })
-      te.open = !te.open
-      menu[index].children.filter(t => te.name !== t.name).map(tem => tem.open = false)
-      store.dispatch('router/setPath', `${pathName.value.split('/')[0].trim()} / ${te.name}`)
-      naver(te.src)
-    }
+      te.open = !te.open;
+      menu[index].children
+        .filter((t) => te.name !== t.name)
+        .map((tem) => (tem.open = false));
+      store.dispatch(
+        "router/setPath",
+        `${pathName.value.split("/")[0].trim()} / ${te.name}`
+      );
+      naver(te.src);
+    };
 
     // 其他menu设置false
     const otherMenuSet = (menu, name) => {
-      menu.filter(tr => tr.name !== name).map(temp => {
-        temp.open = false
-        temp.children.map(tem => tem.open = false)
-      })
-    }
+      menu
+        .filter((tr) => tr.name !== name)
+        .map((temp) => {
+          temp.open = false;
+          temp.children.map((tem) => (tem.open = false));
+        });
+    };
 
     // 跳转锚点
-    let timer = null
+    let timer = null;
     const naver = (id) => {
       const obj = document.getElementById(`hao_tab-${id}`);
-      const obj_scroll = document.getElementsByClassName('right-content-content')[0]
-      const obj_container = document.getElementsByClassName('app-container')[0]
-      const max = obj_container.clientHeight - obj_scroll.clientHeight
-      const oPos = obj.offsetTop - 80 - 10
-      
-      // 如果已建立定时器，清除定时器
-      if (timer) clearInterval(timer)
+      const obj_scroll = document.getElementsByClassName(
+        "right-content-content"
+      )[0];
+      const obj_container = document.getElementsByClassName("app-container")[0];
+      const max = obj_container.clientHeight - obj_scroll.clientHeight;
+      const oPos = obj.offsetTop - 80 - 10;
 
-      scrollAnimation(obj_scroll, oPos > max ? max : oPos, 1000 / 120)
-    }
+      // 如果已建立定时器，清除定时器
+      if (timer) clearInterval(timer);
+
+      scrollAnimation(obj_scroll, oPos > max ? max : oPos, 1000 / 120);
+    };
 
     // 匀速动画 - 跳转锚点
     const scrollAnimation = (obj, Pos, time) => {
       timer = setInterval(() => {
-        var currentY = obj.scrollTop // 当前及滑动中任意时刻位置
+        var currentY = obj.scrollTop; // 当前及滑动中任意时刻位置
         var distance = Pos > currentY ? Pos - currentY : currentY - Pos; // 剩余距离
         var speed = Math.ceil(distance / time); // 每时刻速度
-        
-        if (Math.ceil(currentY) === Pos || Math.ceil(currentY) === obj.clientHeight) {
-          clearInterval(timer)
+
+        if (
+          Math.ceil(currentY) === Pos ||
+          Math.ceil(currentY) === obj.clientHeight
+        ) {
+          clearInterval(timer);
         } else {
           obj.scrollTo(0, Pos > currentY ? currentY + speed : currentY - speed);
         }
       }, 10);
-    }
+    };
 
     return {
       menu,
       pathName,
       BackgroundColor,
       gotoRouter,
-      openChild
-    }
-  }
-}
+      openChild,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -111,7 +143,7 @@ export default {
     text-align: center;
     cursor: pointer;
     margin: 0;
-    transition: padding .5s;
+    transition: padding 0.5s;
     &.menu-child {
       padding-left: 50px;
       &:hover {
