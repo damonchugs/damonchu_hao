@@ -1,25 +1,25 @@
 // 使用 Mock
-import Mock from 'mockjs'
+import Mock from "mockjs";
 // 获取文件
-const mocks = []
+const mocks = [];
 
-const modulesFiles = require.context('./data', false, /\.js$/)
+const modulesFiles = require.context("./data", false, /\.js$/);
 modulesFiles.keys().reduce((modules, modulePath) => {
   // const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-  const value = modulesFiles(modulePath)
+  const value = modulesFiles(modulePath);
   // modules[moduleName] = value.default
-  mocks.push(value.default[0])
-  return modules
-}, {})
+  mocks.push(value.default[0]);
+  return modules;
+}, {});
 
-mocks.reverse()
+mocks.reverse();
 
 // Mock.mock('/api/web', 'post', web);
 
 // for mock server
 const responseFake = (url, type, respond) => {
-  Mock.mock(`/mock${url}`, type, respond)
-}
+  Mock.mock(`/mock${url}`, type, respond);
+};
 
 // for (let key in mocks) {
 //   mocks[key].tab.map(route => {
@@ -29,11 +29,11 @@ const responseFake = (url, type, respond) => {
 
 // Mock.mock(`/mock/menu`, 'get', mocks)
 
-export { mocks }
+export { mocks };
 
-export default mocks.map(route => {
-  return responseFake(route.url, route.type, route.response)
-})
+export default mocks.map((route) => {
+  return responseFake(route.url, route.type, route.response);
+});
 
 // responseFake('/web')
 

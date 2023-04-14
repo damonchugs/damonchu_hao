@@ -20,8 +20,6 @@ const router = route.find((t) => t.src === subject);
 router.open = true;
 router.children[0].open = true;
 
-console.log(mocks, json);
-
 const state = {
   subject,
   path: `${router.name} / ${router.children[0].name}`,
