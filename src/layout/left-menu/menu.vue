@@ -1,9 +1,6 @@
 <template>
   <div
     class="left-menu-contanier"
-    :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${
-      BackgroundColor.split(',')[3]
-    }`"
   >
     <div v-for="(t, index) in menu" :key="`left-menu_${index}`">
       <p
@@ -137,6 +134,9 @@ export default {
 <style lang="scss" scoped>
 .left-menu-contanier {
   height: calc(100vh - 80px - 60px);
+  color: var(--theme-color-1);
+  background-color: var(--theme-background-2);
+
   .menu-name {
     height: 40px;
     line-height: 40px;
