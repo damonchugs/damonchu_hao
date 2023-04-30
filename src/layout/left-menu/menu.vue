@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
@@ -43,6 +43,15 @@ export default {
     let pathName = computed(() => store.state.router.path);
 
     const menu = ref(router);
+
+    onMounted(() => {
+      GetMenu();
+    });
+
+    /* 获取路由信息 */
+    const GetMenu = async () => {
+      store.dispatch("router/getRouterMenu", { type: 'MenuList' })
+    }
 
     /* 颜色设置 */
     const ThemeColor = computed(() => store.getters.ThemeColor);
