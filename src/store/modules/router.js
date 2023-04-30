@@ -10,10 +10,7 @@ function CheckData(routerArray) {
     const tab = routerArray.filter((t) => t.parent_id === id);
     tab.forEach((t) => {
       arr.children.push({
-        id: t.id,
-        parent_id: t.parent_id,
-        name: t.name,
-        src: t.src,
+        ...t,
         open: false,
       });
     });
@@ -43,10 +40,12 @@ function CheckTab(router, subject, tab_list) {
   /* 整理 */
   const Tab = [];
   list.forEach((temp) => {
-    const { id, name, src } = temp;
+    const { id, name, src, subtitle } = temp;
+    console.log(temp, "temp");
     Tab.push({
       name,
       src,
+      subtitle,
       hao: tab_list.filter((t) => t.directory_id === id),
     });
   });

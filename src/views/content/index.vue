@@ -35,8 +35,6 @@ import "ant-design-vue/lib/divider/style/css";
 // 引用插件
 import { ref, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-// 请求数据
-import axios from "axios";
 
 const store = useStore();
 
