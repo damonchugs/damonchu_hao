@@ -8,6 +8,8 @@ require('/mock/index.js')
 // 添加setting
 require('./setting.js')
 
+import "loading-api"
+
 // 引入图标
 // import * as Icon from '@ant-design/icons-vue'
 

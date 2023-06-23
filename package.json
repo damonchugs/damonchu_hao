@@ -12,6 +12,7 @@
     "ant-design-vue": "^2.2.8",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "loading-api": "^1.1.8",
     "mockjs": "^1.1.0",
     "url-join": "^5.0.0",
     "vue": "^3.0.0",
