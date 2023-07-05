@@ -12,6 +12,7 @@
     <div class="tab-name">{{ pathName }}</div>
 
     <div class="set">
+      <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
     </div>
@@ -33,11 +34,16 @@
           <RadioButton value="dark">暗黑</RadioButton>
         </Group>
       </p>
-      <div>
-        <el-button type="primary" @click="BaseData.visible = true"
-          >登录</el-button
+      <!-- <div>
+        <Button type="primary" @click="BaseData.visible = true"
+          >登录</Button
         >
-      </div>
+      </div> -->
+      <!-- <div>
+        <Button type="primary" @click="OpenPianoVisible">
+          钢琴
+        </Button>
+      </div> -->
     </Drawer>
 
     <!-- <Drawer
@@ -52,6 +58,19 @@
         <BaseDataContainer v-else />
       </div>
     </Drawer> -->
+    <Drawer
+      v-model:visible="PianoSet.visible"
+      :title="PianoSet.title"
+      :height="PianoSet.height"
+      :placement="PianoSet.direction"
+      width="90%"
+      class="pianoclass"
+      @after-visible-change="PianoSetClose"
+    >
+      <div class="PianoSet-container">
+        <Piano />
+      </div>
+    </Drawer>
   </div>
 </template>
 
@@ -62,17 +81,21 @@ import { useStore } from "vuex";
 
 // 引用组件
 import Drawer from "ant-design-vue/lib/drawer";
+import Button from "ant-design-vue/lib/button";
+import "ant-design-vue/lib/button/style/css";
 import "ant-design-vue/lib/drawer/style/css";
 import { Group, RadioButton } from "ant-design-vue/lib/radio";
 import "ant-design-vue/lib/radio/style/css";
 import LoginContainer from "@/views/login";
 import BaseDataContainer from "@/views/baseData";
+import Piano from '@/views/piano';
 
 import {
   SyncOutlined,
   SettingOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  CustomerServiceOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -81,11 +104,14 @@ export default {
     SettingOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    CustomerServiceOutlined,
+    Button,
     Drawer,
     Group,
     RadioButton,
     LoginContainer,
     BaseDataContainer,
+    Piano
   },
   setup() {
     let loading = ref(false);
@@ -117,6 +143,22 @@ export default {
           .find((t) => t.value === ThemeColor.value)
           .colors.split("|")[2]
     );
+
+    const PianoSet = ref({
+      visible: false,
+      title: '',
+      direction: 'top',
+      height: '80vh'
+    })
+
+    /* 打开钢琴页 */
+    const OpenPianoVisible = () => {
+      PianoSet.value.visible = true;
+    }
+    /* 关闭钢琴页 */
+    const PianoSetClose = () => {
+      PianoSet.value.visible = false;
+    }
 
     /* 目录展开/收缩 */
     const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle);
@@ -159,6 +201,9 @@ export default {
       ThemeColor,
       BackgroundColor,
       PhoneMenuToggle,
+      PianoSet,
+      OpenPianoVisible,
+      PianoSetClose,
       reflashPage,
       drawerClose,
       SettingBackground,
@@ -192,9 +237,16 @@ export default {
     display: none;
   }
 }
+
 @media screen and (max-width: 1000px) {
   .right-content-header .menu-toggle {
     display: block;
   }
 }
+</style>
+
+<style>
+  .pianoclass.ant-drawer .ant-drawer-content {
+    overflow-y: hidden;
+  }
 </style>
