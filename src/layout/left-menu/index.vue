@@ -1,5 +1,5 @@
 <template>
-  <div class="left-menu" :style="`background-color: ${BackgroundColor}; left: ${IsPhone && !PhoneMenuToggle ? '-100vw' : '0px'}`">
+  <div class="left-menu" :style="`left: ${IsPhone && !PhoneMenuToggle ? '-100vw' : '0px'}`">
     <div class="logo">DamonChu-hao</div>
     <Menu />
     <div class="left-menu-bottom">Vue3-Demo</div>
@@ -50,6 +50,7 @@ export default {
   transition: left .2s;
   position: relative;
   z-index: 3;
+  background-color: var(--theme-background-1);
   .logo {
     height: 80px;
     line-height: 80px;

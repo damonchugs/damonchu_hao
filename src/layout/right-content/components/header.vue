@@ -1,9 +1,6 @@
 <template>
   <div
     class="right-content-header"
-    :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${
-      BackgroundColor.split(',')[1]
-    };`"
   >
     <div class="menu-toggle" @click="MenuToggleClick">
       <MenuFoldOutlined v-if="PhoneMenuToggle" />
@@ -38,8 +35,7 @@
         <Button type="primary" @click="BaseData.visible = true"
           >登录</Button
         >
-      </div> -->
-      <!-- <div>
+      <div>
         <Button type="primary" @click="OpenPianoVisible">
           钢琴
         </Button>
@@ -76,7 +72,7 @@
 
 <script>
 // 引用组件
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 
 // 引用组件
@@ -96,6 +92,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   CustomerServiceOutlined,
+  ConsoleSqlOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -105,6 +102,7 @@ export default {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     CustomerServiceOutlined,
+    ConsoleSqlOutlined,
     Button,
     Drawer,
     Group,
@@ -136,6 +134,7 @@ export default {
     let pathName = computed(() => store.state.router.path);
     /* 颜色设置 */
     const ThemeColor = computed(() => store.getters.ThemeColor);
+    const ThemeColorValue = computed(() => ThemeColor.value);
     const ThemeOptions = computed(() => store.getters.ThemeOptions);
     const BackgroundColor = computed(
       () =>
@@ -143,22 +142,6 @@ export default {
           .find((t) => t.value === ThemeColor.value)
           .colors.split("|")[2]
     );
-
-    const PianoSet = ref({
-      visible: false,
-      title: '',
-      direction: 'top',
-      height: '80vh'
-    })
-
-    /* 打开钢琴页 */
-    const OpenPianoVisible = () => {
-      PianoSet.value.visible = true;
-    }
-    /* 关闭钢琴页 */
-    const PianoSetClose = () => {
-      PianoSet.value.visible = false;
-    }
 
     /* 目录展开/收缩 */
     const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle);
@@ -189,7 +172,6 @@ export default {
 
     // 设置背景颜色 - 切换模式
     const ChangeThemeColor = (val) => {
-      console.log(val.target.value, "val.target.value");
       store.dispatch("setting/SetColorValue", val.target.value);
     };
 
@@ -220,6 +202,8 @@ export default {
   display: flex;
   justify-content: space-between;
   line-height: 80px;
+  color: var(--theme-color-1);
+  background-color: var(--theme-background-5);
   .set {
     display: flex;
     p {
