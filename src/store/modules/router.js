@@ -41,7 +41,6 @@ function CheckTab(router, subject, tab_list) {
   const Tab = [];
   list.forEach((temp) => {
     const { id, name, src, subtitle } = temp;
-    console.log(temp, "temp");
     Tab.push({
       name,
       src,
