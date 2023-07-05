@@ -143,6 +143,21 @@ export default {
           .colors.split("|")[2]
     );
 
+    const PianoSet = ref({
+      visible: false,
+      title: '',
+      height: '80vh',
+      direction: 'top',
+    })
+
+    const OpenPianoVisible = (val) => {
+      PianoSet.value.visible = true
+    }
+
+    const PianoSetClose = (val) => {
+      PianoSet.value.visible = false
+    }
+
     /* 目录展开/收缩 */
     const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle);
     const MenuToggleClick = () => {
