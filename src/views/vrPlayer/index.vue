@@ -10,21 +10,20 @@
         <Button type="primary" @click="FileSelect">确定</Button>
       </div>
     </div>
-    <video
-      v-if="Camera.videoSrc !== ''"
-      :ref="VideoRef"
-      id="video-vr"
-      class="video-js vjs-default-skin"
-      crossorigin="anonymous"
-      controls
-      playsinline
-    >
-      <source
+    <div class="video-camera">
+      <Spin v-if="SpinLoading" />
+      <video
+        v-if="Camera.videoSrc !== ''"
+        :ref="VideoRef"
+        id="video-vr"
+        class="video-js vjs-default-skin"
+        crossorigin="anonymous"
+        controls
+        playsinline
         :src="Camera.videoSrc"
-        id="videoVr-${contId}"
-        type="video/mp4"
-      />
-    </video>
+      >
+      </video>
+    </div>
   </div>
 </template>
 
@@ -36,7 +35,7 @@ export default {
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Button } from 'ant-design-vue';
+import { Button, Spin } from 'ant-design-vue';
 
 
 /* 视频对象 */
@@ -47,6 +46,7 @@ const Camera = ref({
 const InputFile = ref('');
 const VideoRef = ref(null);
 const InputFileRef = ref(null);
+const SpinLoading = ref(false);
 
 // InputFileRef
 
@@ -63,12 +63,14 @@ const InputChange = (event) => {
 
 /* 点击确定视频播放 */
 const FileSelect = () => {
+  SpinLoading.value = true;
   Camera.videoSrc = '';
-  console.log(InputFile.value, 'InputFile.value');
+  // console.log(InputFile.value, 'InputFile.value', Camera.videoSrc);
   const timer = setTimeout(() => {
     Camera.value.videoSrc = InputFile.value;
+    SpinLoading.value = false;
     clearTimeout(timer);
-  }, 100);
+  }, 1000);
 }
 
 function getObjectURL(file)
@@ -130,11 +132,19 @@ function getObjectURL(file)
     }
   }
 
-  .video-js {
+  .video-camera {
     width: 100%;
     height: calc(100% - 33px);
     position: absolute;
     top: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    video {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .easy-player-box {
