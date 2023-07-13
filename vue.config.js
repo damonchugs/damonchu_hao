@@ -17,17 +17,26 @@ module.exports = {
     port: 4369, //端口号
     https: false, //是否开启https
     hotOnly: true, //是否开启热模块更新
-    // proxy:{
-    //   //配置跨域,可参见官方文档https://webpack.js.org/configuration/dev-server/#devserverproxy
-    //   '/api':{
-    //       target:'http://localhost:4369/api/',//跨域地址
-    //       ws:true,//如果要代理WebSockets,设置为true
-    //       changOrigin:true,//默认flase,将主机头的原点更改为目标URL
-    //       pathRewrite:{//如果不希望传递/api，则需要重写路径：
-    //           '^/api':''
-    //       }
-    //   }
-    // }
+    proxy: {
+      //配置跨域,可参见官方文档https://webpack.js.org/configuration/dev-server/#devserverproxy
+      // '/api':{
+      //     target:'http://localhost:4369/api/',//跨域地址
+      //     ws:true,//如果要代理WebSockets,设置为true
+      //     changOrigin:true,//默认flase,将主机头的原点更改为目标URL
+      //     pathRewrite:{//如果不希望传递/api，则需要重写路径：
+      //         '^/api':''
+      //     }
+      // },
+      "/video": {
+        target: "http://damonchu.fun", //跨域地址
+        ws: true, //如果要代理WebSockets,设置为true
+        changOrigin: true, //默认flase,将主机头的原点更改为目标URL
+        pathRewrite: {
+          //如果不希望传递/api，则需要重写路径：
+          "^/api": "",
+        },
+      },
+    },
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

@@ -10,6 +10,7 @@
 
     <div class="set">
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
+      <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
     </div>
@@ -54,6 +55,8 @@
         <BaseDataContainer v-else />
       </div>
     </Drawer> -->
+
+    <!-- 钢琴 -->
     <Drawer
       v-model:visible="PianoSet.visible"
       :title="PianoSet.title"
@@ -65,6 +68,21 @@
     >
       <div class="PianoSet-container">
         <Piano />
+      </div>
+    </Drawer>
+
+    <!-- Vr视频 -->
+    <Drawer
+      v-model:visible="VrPlayer.visible"
+      :title="VrPlayer.title"
+      :height="VrPlayer.height"
+      :placement="VrPlayer.direction"
+      width="90%"
+      class="vrclass"
+      @after-visible-change="VrPlayerClose"
+    >
+      <div class="vrclass-container">
+        <VrPlayerDom v-if="VrPlayer.visible" />
       </div>
     </Drawer>
   </div>
@@ -84,7 +102,9 @@ import { Group, RadioButton } from "ant-design-vue/lib/radio";
 import "ant-design-vue/lib/radio/style/css";
 import LoginContainer from "@/views/login";
 import BaseDataContainer from "@/views/baseData";
+
 import Piano from '@/views/piano';
+import VrPlayerDom from '@/views/vrPlayer';
 
 import {
   SyncOutlined,
@@ -93,6 +113,7 @@ import {
   MenuFoldOutlined,
   CustomerServiceOutlined,
   ConsoleSqlOutlined,
+  VideoCameraOutlined
 } from "@ant-design/icons-vue";
 
 export default {
@@ -103,13 +124,15 @@ export default {
     MenuFoldOutlined,
     CustomerServiceOutlined,
     ConsoleSqlOutlined,
+    VideoCameraOutlined,
     Button,
     Drawer,
     Group,
     RadioButton,
     LoginContainer,
     BaseDataContainer,
-    Piano
+    Piano,
+    VrPlayerDom
   },
   setup() {
     let loading = ref(false);
@@ -143,6 +166,24 @@ export default {
           .colors.split("|")[2]
     );
 
+    const VrPlayer = ref({
+      visible: false,
+      title: '',
+      height: '100vh',
+      direction: 'top',
+    })
+
+    const OpenVrPlayerVisible = (val) => {
+      VrPlayer.value.visible = true
+    }
+
+    const VrPlayerClose = (val) => {
+      VrPlayer.value.visible = false
+    }
+
+
+
+    /* 钢琴功能显示 */
     const PianoSet = ref({
       visible: false,
       title: '',
@@ -198,6 +239,9 @@ export default {
       ThemeColor,
       BackgroundColor,
       PhoneMenuToggle,
+      VrPlayer,
+      OpenVrPlayerVisible,
+      VrPlayerClose,
       PianoSet,
       OpenPianoVisible,
       PianoSetClose,
@@ -244,7 +288,7 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
   .pianoclass.ant-drawer .ant-drawer-content {
     overflow-y: hidden;
   }

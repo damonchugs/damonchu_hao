@@ -9,12 +9,15 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
+    "@easydarwin/easyplayer": "^5.1.1",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "loading-api": "^1.1.8",
     "mockjs": "^1.1.0",
     "url-join": "^5.0.0",
+    "video.js": "^8.3.0",
+    "videojs-vr": "^2.0.0",
     "vue": "^3.0.0",
     "vuex": "^4.0.2"
   },
