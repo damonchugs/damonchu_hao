@@ -1,6 +1,15 @@
 <template>
   <div class="vr-player-container">
-    <input class="input-files" type="file" @change="(file) => InputChange(file)" />
+    <div class="input-box">
+      <input class="InputText" v-model="InputFile" type="text" />
+      <div class="input-button">
+        <div class="FileButton">
+          <input ref="InputFileRef" class="input-files" type="file" @change="(file) => InputChange(file)" />
+          <Button type="primary" @click="BaseFileSelect">本地</Button>
+        </div>
+        <Button type="primary" @click="FileSelect">确定</Button>
+      </div>
+    </div>
     <video
       v-if="Camera.videoSrc !== ''"
       :ref="VideoRef"
@@ -27,6 +36,8 @@ export default {
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { Button } from 'ant-design-vue';
+
 
 /* 视频对象 */
 const Camera = ref({
@@ -35,11 +46,27 @@ const Camera = ref({
 
 const InputFile = ref('');
 const VideoRef = ref(null);
+const InputFileRef = ref(null);
 
+// InputFileRef
+
+const BaseFileSelect = () => {
+  const a = document.createEvent("MouseEvents");
+  a.initEvent("click", true, true);  
+  InputFileRef.value.dispatchEvent(a);
+}
+
+/* 监听本地文件选择 */
 const InputChange = (event) => {
-  Camera.videoSrc = ''
+  InputFile.value = getObjectURL(event.target.files[0]);
+}
+
+/* 点击确定视频播放 */
+const FileSelect = () => {
+  Camera.videoSrc = '';
+  console.log(InputFile.value, 'InputFile.value');
   const timer = setTimeout(() => {
-    Camera.value.videoSrc = getObjectURL(event.target.files[0]);
+    Camera.value.videoSrc = InputFile.value;
     clearTimeout(timer);
   }, 100);
 }
@@ -68,18 +95,46 @@ function getObjectURL(file)
   height: calc(100vh - 50px);
   background-color: $backgroundColor-4;
   position: relative;
-  .input-files {
+  .input-box {
     position: absolute;
     top: 0px;
     left: 0px;
     background-color: white;
+    display: flex;
+
+    .InputText {
+      width: calc(100vw - 40px - 128px);
+    }
+
+    .input-button {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .FileButton {
+      display: flex;
+      position: relative;
+      .input-files {
+        width: 64px;
+        height: 32px;
+        visibility: hidden;
+        position: relative;
+        z-index: 1;
+      }
+
+      button {
+        position: absolute;
+        left: 0px;
+        z-index: 2;
+      }
+    }
   }
 
   .video-js {
     width: 100%;
-    height: calc(100% - 30px);
+    height: calc(100% - 33px);
     position: absolute;
-    top: 30px;
+    top: 33px;
   }
 
   .easy-player-box {

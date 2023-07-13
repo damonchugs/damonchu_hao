@@ -292,4 +292,18 @@ export default {
   .pianoclass.ant-drawer .ant-drawer-content {
     overflow-y: hidden;
   }
+  .vrclass.ant-drawer {
+    .ant-drawer-close {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .anticon.anticon-close {
+      position: relative;
+      top: 0px;
+      left: -15px;
+    }
+  }
 </style>
