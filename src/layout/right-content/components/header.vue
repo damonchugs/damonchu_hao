@@ -9,6 +9,7 @@
     <div class="tab-name">{{ pathName }}</div>
 
     <div class="set">
+      <p><SearchOutlined :spin="loading" @click="OpenSearchVisible" /></p>
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
@@ -85,15 +86,32 @@
         <VrPlayerDom v-if="VrPlayer.visible" />
       </div>
     </Drawer>
+
+    <!-- 搜索框 -->
+    <Modal
+      v-model:visible="Search.visible"
+      :title="Search.title"
+      :footer="null"
+      width="50%"
+      class="SearchClass"
+      closable
+      destroyOnClose
+      @cancel="SearchClose"
+    >
+      <div class="Search-container">
+        <SearchBoxDom v-if="Search.visible" />
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
 // 引用组件
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 // 引用组件
+import Modal from "ant-design-vue/lib/modal";
 import Drawer from "ant-design-vue/lib/drawer";
 import Button from "ant-design-vue/lib/button";
 import "ant-design-vue/lib/button/style/css";
@@ -105,6 +123,7 @@ import BaseDataContainer from "@/views/baseData";
 
 import Piano from '@/views/piano';
 import VrPlayerDom from '@/views/vrPlayer';
+import SearchBoxDom from '@/views/searchBox';
 
 import {
   SyncOutlined,
@@ -113,7 +132,8 @@ import {
   MenuFoldOutlined,
   CustomerServiceOutlined,
   ConsoleSqlOutlined,
-  VideoCameraOutlined
+  VideoCameraOutlined,
+  SearchOutlined
 } from "@ant-design/icons-vue";
 
 export default {
@@ -125,14 +145,17 @@ export default {
     CustomerServiceOutlined,
     ConsoleSqlOutlined,
     VideoCameraOutlined,
+    SearchOutlined,
     Button,
     Drawer,
     Group,
     RadioButton,
+    Modal,
     LoginContainer,
     BaseDataContainer,
     Piano,
-    VrPlayerDom
+    VrPlayerDom,
+    SearchBoxDom
   },
   setup() {
     let loading = ref(false);
@@ -173,12 +196,25 @@ export default {
       direction: 'top',
     })
 
+    const Search = ref({
+      visible: false,
+      title: '',
+    })
+
     const OpenVrPlayerVisible = (val) => {
       VrPlayer.value.visible = true
     }
 
     const VrPlayerClose = (val) => {
       VrPlayer.value.visible = false
+    }
+
+    const OpenSearchVisible = (val) => {
+      Search.value.visible = true
+    }
+
+    const SearchClose = (val) => {
+      Search.value.visible = false
     }
 
 
@@ -245,6 +281,9 @@ export default {
       PianoSet,
       OpenPianoVisible,
       PianoSetClose,
+      Search,
+      OpenSearchVisible,
+      SearchClose,
       reflashPage,
       drawerClose,
       SettingBackground,
@@ -306,4 +345,8 @@ export default {
       left: -15px;
     }
   }
+
+  // .Search-container {
+    
+  // }
 </style>
