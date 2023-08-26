@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import store from "./store";
+import { router } from "./router/index.js";
 
 import "ant-design-vue/dist/antd.css";
 
@@ -16,7 +17,10 @@ import "loading-api";
 // import * as Icon from '@ant-design/icons-vue'
 
 const app = createApp(App);
-app.use(store).mount("#app");
+app
+  .use(store)
+  .use(router)
+  .mount("#app");
 
 // // 全局导入图标
 // for (const i in Icon) {

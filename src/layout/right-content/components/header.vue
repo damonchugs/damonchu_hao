@@ -12,6 +12,7 @@
       <p><SearchOutlined :spin="loading" @click="OpenSearchVisible" /></p>
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
+      <p><InstagramOutlined :spin="loading" @click="GoToImageArray" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
     </div>
@@ -133,7 +134,8 @@ import {
   CustomerServiceOutlined,
   ConsoleSqlOutlined,
   VideoCameraOutlined,
-  SearchOutlined
+  SearchOutlined,
+  InstagramOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -145,6 +147,7 @@ export default {
     CustomerServiceOutlined,
     ConsoleSqlOutlined,
     VideoCameraOutlined,
+    InstagramOutlined,
     SearchOutlined,
     Button,
     Drawer,
@@ -267,6 +270,11 @@ export default {
       store.dispatch("setting/SetColorValue", val.target.value);
     };
 
+    // 跳转图片页
+    const GoToImageArray = () => {
+      window.open('/hao/#/images');
+    };
+
     return {
       pathName,
       loading,
@@ -289,6 +297,7 @@ export default {
       SettingBackground,
       ChangeThemeColor,
       MenuToggleClick,
+      GoToImageArray,
     };
   },
 };

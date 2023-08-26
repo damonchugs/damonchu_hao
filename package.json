@@ -15,10 +15,12 @@
     "core-js": "^3.6.5",
     "loading-api": "^1.1.8",
     "mockjs": "^1.1.0",
+    "nprogress": "^0.2.0",
     "url-join": "^5.0.0",
     "video.js": "^8.3.0",
     "videojs-vr": "^2.0.0",
     "vue": "^3.0.0",
+    "vue-router": "4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
