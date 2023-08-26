@@ -8,14 +8,21 @@
       <div v-show="Pages.max > 0" class="page">
         <APagination v-model:current="Pages.current" simple :total="Pages.max" @change="PageChange" />
       </div>
+      <div v-show="Pages.max > 0" class="pick-btn">
+        <div class="radio-style">
+          <AButton :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyle.direction = 'col'">竖版</AButton>
+          <AButton :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyle.direction = 'row'">横版</AButton>
+        </div>
+      </div>
     </div>
 
-    <div class="images image-array-con-image" @scroll="ImagesScroll">
+    <div
+      :class="`images image-array-con-image ${ImageStyle.direction === 'row' ? 'x-image' : 'y-image'}`"
+      @scroll="ImagesScroll">
       <img
         v-for="(t, index) in Images" :key="`${index}-${Date.now()}`"
         :src="t"
         :data-index="index"
-        style="width: 100vw;"
         />
     </div>
   </div>
@@ -33,6 +40,8 @@ import AButton from "ant-design-vue/lib/button";
 import "ant-design-vue/lib/button/style/css";
 import APagination from "ant-design-vue/lib/pagination";
 import "ant-design-vue/lib/pagination/style/css";
+import ARadio from 'ant-design-vue/lib/radio';
+import "ant-design-vue/lib/radio/style/css";
 
 import { ref } from 'vue';
 
@@ -43,6 +52,10 @@ const Pages = ref({
   min: 1,
   current: 1,
   change: false,
+});
+
+const ImageStyle = ref({
+  direction: 'col'
 })
 
 /* 选择文件夹 */
@@ -107,6 +120,11 @@ const ImagesScroll = (event) => {
   // 序号赋值到分页器
   Pages.value.current = index === 0 ? Pages.value.max : index;
 }
+
+/* 图片竖版修改 */
+const ImageStyleDirection = (val) => {
+  console.log(val, 'val');
+}
 </script>
 
 <style lang="scss" scoped>
@@ -156,6 +174,10 @@ $SelectHeight: 40px;
       margin-left: 10px;
       margin-top: 3px;
     }
+
+    .pick-btn {
+      margin-left: 10px;
+    }
   }
 
   .images {
@@ -164,11 +186,25 @@ $SelectHeight: 40px;
     position: fixed;
     top: $SelectHeight + 1px;
     left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    &.x-image {
+      overflow-x: auto;
+      overflow-y: hidden;
 
-    .el-image {
-      width: 100%;
+      display: flex;
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+    &.y-image {
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      display: block;
+      img {
+        width: 100vw;
+        height: auto;
+      }
     }
   }
 }
