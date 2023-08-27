@@ -272,6 +272,7 @@ export default {
 
     // 跳转图片页
     const GoToImageArray = () => {
+      
       window.open('/hao/#/images');
     };
 
