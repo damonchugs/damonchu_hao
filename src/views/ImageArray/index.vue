@@ -138,7 +138,7 @@ const ImageStyleDirectionFoo = (val) => {
   ImageStyle.value.direction = val;
   if (val === 'row') {
     Images.value = [...OriginImageArray.value];
-    Images.value.sort();
+    Images.value.reverse();
     setTimeout(() => {
       const ImageDom = document.querySelector('.image-array-con-image');
       const { offsetLeft, clientWidth } = ImageDom.children[ImageDom.children.length - 1];
