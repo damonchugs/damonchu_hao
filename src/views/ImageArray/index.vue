@@ -10,8 +10,8 @@
       </div>
       <div v-show="Pages.max > 0" class="pick-btn">
         <div class="radio-style">
-          <AButton :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyle.direction = 'col'">竖版</AButton>
-          <AButton :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyle.direction = 'row'">横版</AButton>
+          <AButton :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('col')">竖版</AButton>
+          <AButton :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('row')">横版</AButton>
         </div>
       </div>
     </div>
@@ -46,6 +46,7 @@ import "ant-design-vue/lib/radio/style/css";
 import { ref } from 'vue';
 
 const Images = ref([]);
+const OriginImageArray = ref([]);
 
 const Pages = ref({
   max: 0,
@@ -79,6 +80,7 @@ const selectMkdir = (event) => {
 
   // 图片展示
   Images.value = images;
+  OriginImageArray.value = images;
   // 页码设置
   Pages.value.max = images.length * 10;
   Pages.value.current = 1;
@@ -91,7 +93,12 @@ const PageChange = (val) => {
 
   // 按照图片offsetTop 设置父级的滚动高度
   const ImageDom = document.querySelector('.image-array-con-image');
-  ImageDom.scrollTop = ImageDom.children[val - 1].offsetTop;
+
+  if (ImageStyle.value.direction === 'col') { // 竖屏
+    ImageDom.scrollTop = ImageDom.children[val - 1].offsetTop;
+  } else { // 横屏
+    ImageDom.scrollLeft = ImageDom.children[Pages.value.max / 10 - val].offsetLeft;
+  }
 
   // 页面切换恢复
   setTimeout(() => {
@@ -106,11 +113,12 @@ const ImagesScroll = (event) => {
 
   // 通过 每级的图片的高度计算 及 父级滚动高度，计算当前显示的图片序号
   const ImageDom = document.querySelector('.image-array-con-image');
-  let top = 0;
+  let length = 0;
   let index = 0;
   for (let i = 0; i < event.target.children.length; i++) {
-    if (ImageDom.scrollTop >= top) {
-      top += event.target.children[i].height;
+    const scrollNumber = ImageStyle.value.direction === 'row' ? ImageDom.scrollLeft : ImageDom.scrollTop;
+    if (scrollNumber >= length) {
+      length += event.target.children[i][ImageStyle.value.direction === 'row' ? 'clientWidth' : 'clientHeight'];
     } else {
       index = i;
       break;
@@ -118,12 +126,28 @@ const ImagesScroll = (event) => {
   }
 
   // 序号赋值到分页器
-  Pages.value.current = index === 0 ? Pages.value.max : index;
+  if (ImageStyle.value.direction === 'col') { // 竖屏
+    Pages.value.current = index === 0 ? Pages.value.max : index;
+  } else { // 横屏
+    Pages.value.current = index === 0 ? 1 : (Pages.value.max/10) - index;
+  }
 }
 
 /* 图片竖版修改 */
-const ImageStyleDirection = (val) => {
-  console.log(val, 'val');
+const ImageStyleDirectionFoo = (val) => {
+  ImageStyle.value.direction = val;
+  if (val === 'row') {
+    Images.value = [...OriginImageArray.value];
+    Images.value.sort();
+    setTimeout(() => {
+      const ImageDom = document.querySelector('.image-array-con-image');
+      const { offsetLeft, clientWidth } = ImageDom.children[ImageDom.children.length - 1];
+      ImageDom.scrollLeft = offsetLeft + clientWidth;
+    }, 10)
+  } else {
+    Images.value = [...OriginImageArray.value];
+    ImageDom.scrollTop = 0;
+  }
 }
 </script>
 
