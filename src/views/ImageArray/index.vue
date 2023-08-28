@@ -127,9 +127,9 @@ const ImagesScroll = (event) => {
 
   // 序号赋值到分页器
   if (ImageStyle.value.direction === 'col') { // 竖屏
-    Pages.value.current = index === 0 ? Pages.value.max : index;
+    Pages.value.current = index === 0 ? (Pages.value.max / 10) : index;
   } else { // 横屏
-    Pages.value.current = index === 0 ? 1 : (Pages.value.max/10) - index;
+    Pages.value.current = index === 0 ? 1 : (Pages.value.max / 10) - index;
   }
 }
 
