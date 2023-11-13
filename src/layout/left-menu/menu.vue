@@ -76,6 +76,9 @@ export default {
         `${pathName.value.split("/")[0].trim()} / ${te.name}`
       );
       naver(te.src);
+
+      // 关闭目录
+      store.dispatch('setting/SetMenuToggle')
     };
 
     // 其他menu设置false
