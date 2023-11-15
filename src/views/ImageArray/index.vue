@@ -1,5 +1,5 @@
 <template>
-  <div class="image-array-container">
+  <div class="image-array-container" id="image-array-container">
     <div class="select">
       <div class="select-btn">
         <AButton type="primary">选择</AButton>
@@ -13,6 +13,14 @@
           <AButton :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('col')">竖版</AButton>
           <AButton :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('row')">横版</AButton>
         </div>
+      </div>
+      <div class="fullscreen-btn">
+        <AButton v-if="IsFullScreen" @click="FullScreenToggle">
+          <FullscreenExitOutlined />
+        </AButton>
+        <AButton v-else @click="FullScreenToggle">
+          <FullscreenOutlined />
+        </AButton>
       </div>
     </div>
 
@@ -43,10 +51,16 @@ import "ant-design-vue/lib/pagination/style/css";
 import ARadio from 'ant-design-vue/lib/radio';
 import "ant-design-vue/lib/radio/style/css";
 
-import { ref } from 'vue';
+import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue';
+
+import { ref, computed } from 'vue';
+
+import { FullScreen } from '@/utils';
 
 const Images = ref([]);
 const OriginImageArray = ref([]);
+
+const IsFullScreen = ref(document.fullscreenElement);
 
 const Pages = ref({
   max: 0,
@@ -149,6 +163,18 @@ const ImageStyleDirectionFoo = (val) => {
     ImageDom.scrollTop = 0;
   }
 }
+
+/* 打开/关闭 全屏显示 */
+const FullScreenToggle = () => {
+  if (document.fullscreenElement) {
+    FullScreen.close();
+    IsFullScreen.value = !IsFullScreen.value;
+  } else {
+    FullScreen.open(document.querySelector('#image-array-container'));
+    IsFullScreen.value = !IsFullScreen.value;
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -199,8 +225,11 @@ $SelectHeight: 40px;
       margin-top: 3px;
     }
 
-    .pick-btn {
+    .pick-btn, .fullscreen-btn {
       margin-left: 10px;
+      &.fullscreen-btn>button {
+        background-color: transparent;
+      }
     }
   }
 
