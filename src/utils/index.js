@@ -3,13 +3,13 @@
  * @returns {Array}
  */
 export function cleanArray(actual) {
-  const newArray = []
+  const newArray = [];
   for (let i = 0; i < actual.length; i++) {
     if (actual[i]) {
-      newArray.push(actual[i])
+      newArray.push(actual[i]);
     }
   }
-  return newArray
+  return newArray;
 }
 
 /**
@@ -17,13 +17,13 @@ export function cleanArray(actual) {
  * @returns {Array}
  */
 export function param(json) {
-  if (!json) return ''
+  if (!json) return "";
   return cleanArray(
-    Object.keys(json).map(key => {
-      if (json[key] === undefined) return ''
-      return encodeURIComponent(key) + '=' + encodeURIComponent(json[key])
+    Object.keys(json).map((key) => {
+      if (json[key] === undefined) return "";
+      return encodeURIComponent(key) + "=" + encodeURIComponent(json[key]);
     })
-  ).join('&')
+  ).join("&");
 }
 
 /**
@@ -31,9 +31,9 @@ export function param(json) {
  * @returns {Object}
  */
 export function param2Obj(url) {
-  const search = url.split('?')[1]
+  const search = url.split("?")[1];
   if (!search) {
-    return {}
+    return {};
   }
   return JSON.parse(
     '{"' +
@@ -41,11 +41,49 @@ export function param2Obj(url) {
         .replace(/"/g, '\\"')
         .replace(/&/g, '","')
         .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
+        .replace(/\+/g, " ") +
       '"}'
-  )
+  );
 }
 
 export function _isMobile() {
-  return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+  return navigator.userAgent.match(
+    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+  );
 }
+
+/**
+ * 全屏显示/关闭
+ * open  打开全屏显示
+ * close 关闭全屏显示
+ */
+export const FullScreen = {
+  open: (elem) => {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  },
+  close: () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      /* Firefox */
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      /* Chrome, Safari and Opera */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      /* IE/Edge */
+      document.msExitFullscreen();
+    }
+  },
+};
