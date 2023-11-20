@@ -312,6 +312,12 @@ export default {
   line-height: 80px;
   color: var(--theme-color-1);
   background-color: var(--theme-background-5);
+
+  .tab-name {
+    @include Ellipsis();
+    min-width: 112px;
+  }
+
   .set {
     display: flex;
     p {

@@ -99,3 +99,11 @@ div {
     border-radius: 3px;
   }
 }
+
+/* 省略号 */
+@mixin Ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
