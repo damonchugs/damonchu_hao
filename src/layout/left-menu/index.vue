@@ -62,6 +62,8 @@ export default {
     line-height: 60px;
     color: #707070;
     background-color: #fbfbfb;
+    position: relative;
+    top: 1;
   }
   .mask {
     width: calc(100vw - 200px);

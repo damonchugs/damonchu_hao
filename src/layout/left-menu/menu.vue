@@ -146,9 +146,12 @@ export default {
 
 <style lang="scss" scoped>
 .left-menu-contanier {
+  @include scrollbar();
   height: calc(100vh - 80px - 60px);
   color: var(--theme-color-1);
   background-color: var(--theme-background-2);
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .menu-name {
     height: 40px;
