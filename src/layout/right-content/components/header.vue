@@ -93,7 +93,7 @@
       v-model:visible="Search.visible"
       :title="Search.title"
       :footer="null"
-      width="50%"
+      :width="IsPhone ? '100%' : '50%'"
       class="SearchClass"
       closable
       destroyOnClose
@@ -181,6 +181,8 @@ export default {
 
     const store = useStore();
     let pathName = computed(() => store.state.router.path);
+    /* 判断是否是手机pad */
+    const IsPhone = computed(() => store.getters.IsPhone);
     /* 颜色设置 */
     const ThemeColor = computed(() => store.getters.ThemeColor);
     const ThemeColorValue = computed(() => ThemeColor.value);
@@ -299,6 +301,7 @@ export default {
       ChangeThemeColor,
       MenuToggleClick,
       GoToImageArray,
+      IsPhone,
     };
   },
 };

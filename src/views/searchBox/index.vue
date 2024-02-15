@@ -75,10 +75,32 @@ export default {
     const SearchOpen = async () => {
       const { word, url } = FormValue.value;
 
+      const PBH = await PanBaiduHref(word, url);
+      if (PBH) {
+        window.open(PBH);
+        return false;
+      }
+
       if (CheckVerify({ word, url })) {
         const urls = UrlList.value.find(t => t.name === url).url
         window.open(`${urls}${word}`)
       };
+    }
+
+    /* 百度链接验证 */
+    const PanBaiduHref = async (word, url) => {
+      if (url === '百度') {
+        const regex = /s\/\*|提取码/;
+        if (regex.test(word)) {
+          const regex_s = /s\/([\w\d\s\S]+?)(\s*提取码|$)/;
+          const regex_t = /提取码.*?([a-zA-Z0-9]{4})/;
+
+          // 去除汉字和空格，截取前23个字符
+          const filteredString = word.match(regex_s)[1].replace(/[\u4e00-\u9fa5\s]/g, '').substring(0, 23);
+          return `https://pan.baidu.com/s/${filteredString}?pwd=${word.match(regex_t)[1]}`;
+        }
+      }
+      return false;
     }
 
     /* 非空验证 */
