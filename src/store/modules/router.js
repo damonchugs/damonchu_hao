@@ -18,7 +18,7 @@ function CheckData(routerArray) {
   });
 
   // 获取上次浏览专题 - 默认第一个专题
-  const subject = localStorage.getItem("dchaoStorage") || "web" || route[0].src;
+  const subject = localStorage.getItem("dchaoStorage") || route[0].src || "web";
   const router = route.find((t) => t.src === subject);
 
   router.open = true;
