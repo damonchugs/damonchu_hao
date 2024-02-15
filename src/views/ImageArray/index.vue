@@ -6,7 +6,16 @@
         <input type="file" @change="selectMkdir" multiple directory webkitdirectory />
       </div>
       <div v-show="Pages.max > 0" class="page">
-        <APagination v-model:current="Pages.current" simple :total="Pages.max" @change="PageChange" />
+        <!-- /* :page-size="Pages.pageSize" :page-size-options="Pages.pageSizeOptions" */ -->
+        <APagination
+          v-model:current="Pages.current"
+          v-model:page-size="Pages.pageSizes"
+          :defaultPageSize="Pages.defaultPageSize"
+          :total="Pages.max"
+          :page-size-options="Pages.pageSizeOptions"
+          showSizeChanger
+          @change="PageChange"
+          @showSizeChange="PageSizeChange" />
       </div>
       <div v-show="Pages.max > 0" class="pick-btn">
         <div class="radio-style">
@@ -66,6 +75,9 @@ const Pages = ref({
   max: 0,
   min: 1,
   current: 1,
+  pageSize: 100,
+  defaultPageSize: 100,
+  pageSizeOptions: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   change: false,
 });
 
@@ -98,6 +110,8 @@ const selectMkdir = (event) => {
   // 页码设置
   Pages.value.max = images.length * 10;
   Pages.value.current = 1;
+
+  console.log(Pages.value, OriginImageArray);
 };
 
 /* 页面切换 */
@@ -118,6 +132,11 @@ const PageChange = (val) => {
   setTimeout(() => {
     Pages.value.change = false;
   }, 50);
+}
+
+/* 页大小修改回调 */
+const PageSizeChange = (val) => {
+  
 }
 
 /* 下拉监听 */
@@ -197,6 +216,7 @@ $SelectHeight: 40px;
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 1111;
 
     .select-btn {
       width: 100px;
@@ -223,6 +243,8 @@ $SelectHeight: 40px;
     .page {
       margin-left: 10px;
       margin-top: 3px;
+      position: relative;
+      z-index: 999;
     }
 
     .pick-btn, .fullscreen-btn {
