@@ -6,11 +6,14 @@
         <input type="file" @change="selectMkdir" multiple directory webkitdirectory />
       </div>
       <div v-show="Pages.max > 0" class="page">
-        <!-- /* :page-size="Pages.pageSize" :page-size-options="Pages.pageSizeOptions" */ -->
+        <Select class="page-select" :defaultValue="1" @change="ImageSelectChange">
+          <Option v-for="t in Pages.selectSize" :key="`ImageSelectChange_${t}`" :value="t">{{ t }}</Option>
+        </Select>
         <APagination
           v-model:current="Pages.current"
           :total="Pages.max"
           showQuickJumper
+          :defaultPageSize="1"
           @change="PageChange" />
       </div>
       <div v-show="Pages.max > 0" class="pick-btn">
@@ -72,15 +75,25 @@ const Pages = ref({
   max: 0,
   min: 1,
   current: 1,
-  pageSize: 100,
-  defaultPageSize: 100,
-  pageSizeOptions: ['1', '100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
+  pageSize: 1000,
+  defaultPageSize: 1000,
+  pageSizeOptions: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   change: false,
+  select: 1,
+  selectSize: [1]
 });
 
 const ImageStyle = ref({
   direction: 'col'
 })
+
+/* 图片页面选择，val * 100 */
+const ImageSelectChange = (obj) => {
+  const val = obj.target.value;
+  Pages.value.select = val;
+
+  Images.value = OriginImageArray.value.filter((t, index) => index >= (val - 1) * 100 && index < val * 100);
+}
 
 /* 选择文件夹 */
 const selectMkdir = (event) => {
@@ -102,13 +115,23 @@ const selectMkdir = (event) => {
   }
 
   // 图片展示
-  Images.value = images;
   OriginImageArray.value = images;
-  // 页码设置
-  Pages.value.max = images.length * 10;
-  Pages.value.current = 1;
+  Images.value = images.filter((t, index) => index < 100);
 
-  console.log(Pages.value, OriginImageArray);
+  // 页码设置
+  Pages.value.max = images.filter((t, index) => index < 100).length;
+  Pages.value.current = 1;
+  Pages.value.select = 1;
+
+  console.log(Pages.value.max, 'Pages.value.max');
+
+  const numbers = [];
+  for (let i = 1; i <= images.length / 100 + 1; i++) {
+    numbers.push(i)
+  }
+  Pages.value.selectSize = numbers;
+
+  console.log('Pages.value', Pages.value);
 };
 
 /* 页面切换 */
@@ -122,7 +145,7 @@ const PageChange = (val) => {
   if (ImageStyle.value.direction === 'col') { // 竖屏
     ImageDom.scrollTop = ImageDom.children[val - 1].offsetTop;
   } else { // 横屏
-    ImageDom.scrollLeft = ImageDom.children[Pages.value.max / 10 - val].offsetLeft;
+    ImageDom.scrollLeft = ImageDom.children[Pages.value.max - val].offsetLeft;
   }
 
   // 页面切换恢复
@@ -157,25 +180,35 @@ const ImagesScroll = (event) => {
 
   // 序号赋值到分页器
   if (ImageStyle.value.direction === 'col') { // 竖屏
-    Pages.value.current = index === 0 ? (Pages.value.max / 10) : index;
+    Pages.value.current = index === 0 ? Pages.value.max : index;
   } else { // 横屏
-    Pages.value.current = index === 0 ? 1 : (Pages.value.max / 10) - index;
+    Pages.value.current = index === 0 ? 1 : Pages.value.max - index;
   }
 }
 
-/* 图片竖版修改 */
+/**
+ * 根据给定值调整图片样式的方向，并执行相应的滚动动画。
+ * @param {string} val - 图片排列方向，可为 'row'（行）或其他值。
+ */
 const ImageStyleDirectionFoo = (val) => {
+  // 设置图片排列方向
   ImageStyle.value.direction = val;
   if (val === 'row') {
+    // 如果方向为行，反转图片数组并应用
     Images.value = [...OriginImageArray.value];
     Images.value.reverse();
+    // 使用 setTimeout 延迟执行滚动到最右边的动画
     setTimeout(() => {
       const ImageDom = document.querySelector('.image-array-con-image');
+      // 获取最后一个图片元素的位置和宽度
       const { offsetLeft, clientWidth } = ImageDom.children[ImageDom.children.length - 1];
+      // 设置滚动条位置到最右边
       ImageDom.scrollLeft = offsetLeft + clientWidth;
-    }, 10)
+    }, 10) // 延迟 10ms 执行，以便确保 DOM 更新完毕
   } else {
+    // 如果方向不是行，重置图片数组并滚动到顶部
     Images.value = [...OriginImageArray.value];
+    // 直接设置滚动条到顶部
     ImageDom.scrollTop = 0;
   }
 }
@@ -239,9 +272,15 @@ $SelectHeight: 40px;
 
     .page {
       margin-left: 10px;
-      margin-top: 3px;
+      margin-top: 0px;
       position: relative;
       z-index: 999;
+      display: flex;
+
+      .page-select {
+        margin-right: 5px;
+        // padding-top: 3px;
+      }
     }
 
     .pick-btn, .fullscreen-btn {
@@ -268,7 +307,7 @@ $SelectHeight: 40px;
         opacity: .5;
         color: white;
         background-color: rgba(0,0,0,.4);
-        padding: 3px 5px;
+        padding: 0px 3px;
         border-radius: 3px;
         user-select: none;
       }
