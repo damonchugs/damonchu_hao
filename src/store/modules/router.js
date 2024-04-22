@@ -124,10 +124,13 @@ const actions = {
           commit("SET_PATH", `${router.name} / ${router.children[0].name}`);
           commit("SET_ROUTER", route);
           resolve(router);
+          console.log("err——2", router);
         } else {
+          console.log("err——1");
           resolve(state.router);
         }
       } catch (err) {
+        console.log("err", err);
         resolve([]);
       }
     });
