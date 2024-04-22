@@ -9,13 +9,9 @@
         <!-- /* :page-size="Pages.pageSize" :page-size-options="Pages.pageSizeOptions" */ -->
         <APagination
           v-model:current="Pages.current"
-          v-model:page-size="Pages.pageSizes"
-          :defaultPageSize="Pages.defaultPageSize"
           :total="Pages.max"
-          :page-size-options="Pages.pageSizeOptions"
-          showSizeChanger
-          @change="PageChange"
-          @showSizeChange="PageSizeChange" />
+          showQuickJumper
+          @change="PageChange" />
       </div>
       <div v-show="Pages.max > 0" class="pick-btn">
         <div class="radio-style">
@@ -36,11 +32,12 @@
     <div
       :class="`images image-array-con-image ${ImageStyle.direction === 'row' ? 'x-image' : 'y-image'}`"
       @scroll="ImagesScroll">
-      <img
-        v-for="(t, index) in Images" :key="`${index}-${Date.now()}`"
-        :src="t"
-        :data-index="index"
-        />
+      <div v-for="(t, index) in Images" :key="`${index}-${Date.now()}`" class="image-div">
+        <img
+          :src="t"
+          :data-index="index" />
+        <p class="image-number">{{ index + 1 }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -77,7 +74,7 @@ const Pages = ref({
   current: 1,
   pageSize: 100,
   defaultPageSize: 100,
-  pageSizeOptions: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
+  pageSizeOptions: ['1', '100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   change: false,
 });
 
@@ -261,6 +258,21 @@ $SelectHeight: 40px;
     position: fixed;
     top: $SelectHeight + 1px;
     left: 0;
+    .image-div {
+      position: relative;
+      .image-number {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        opacity: .5;
+        color: white;
+        background-color: rgba(0,0,0,.4);
+        padding: 3px 5px;
+        border-radius: 3px;
+        user-select: none;
+      }
+    }
     &.x-image {
       overflow-x: auto;
       overflow-y: hidden;
