@@ -944,6 +944,13 @@
       "href": "https://www.dmhy.org/",
       "subtitle": "动漫花园资源网",
       "directory_id": 35
+    },
+    {
+      "id": 138,
+      "name": "MHWS巨戟龙武器工具",
+      "href": "https://mhws-tools.vercel.app/",
+      "subtitle": "MHWS巨戟龙武器工具，只能外网网络访问",
+      "directory_id": 25
     }
   ]
 }

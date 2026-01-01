@@ -24,7 +24,7 @@ function CheckData(routerArray) {
   router.open = true;
   router.children[0].open = true;
 
-  console.log(router, route, subject)
+  // console.log(router, route, subject);
 
   return {
     router,
@@ -117,23 +117,24 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         if (state.router.length === 0) {
-          const response_menu = await Server.hao.GetMainMenuJson({ // GetMainMenu
+          const response_menu = await Server.hao.GetMainMenuJson({
+            // GetMainMenu
             type: "MenuList",
           });
-          console.log(response_menu, 'response_menu');
+          // console.log(response_menu, 'response_menu');
           const { router, route, subject } = CheckData(response_menu.data);
 
           commit("SET_SUBJECT", subject);
           commit("SET_PATH", `${router.name} / ${router.children[0].name}`);
           commit("SET_ROUTER", route);
           resolve(router);
-          console.log("err——2", router);
+          // console.log("err——2", router);
         } else {
-          console.log("err——1");
+          // console.log("err——1");
           resolve(state.router);
         }
       } catch (err) {
-        console.log("err", err);
+        console.error("err", err);
         resolve([]);
       }
     });
