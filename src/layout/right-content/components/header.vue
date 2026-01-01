@@ -309,7 +309,7 @@ export default {
     // 跳转图片页
     const GoToImageArray = () => {
       
-      window.open('/#/images');
+      window.open('./#/images');
     };
 
     return {
