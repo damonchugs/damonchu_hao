@@ -1,9 +1,6 @@
 <template>
   <div
     class="left-menu-contanier"
-    :style="`background-color: ${BackgroundColor.split(',')[0]}; color: ${
-      BackgroundColor.split(',')[3]
-    }`"
   >
     <div v-for="(t, index) in menu" :key="`left-menu_${index}`">
       <p
@@ -37,8 +34,9 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
+import { _isMobile } from "@/utils/index";
 export default {
   setup() {
     const store = useStore();
@@ -46,6 +44,15 @@ export default {
     let pathName = computed(() => store.state.router.path);
 
     const menu = ref(router);
+
+    onMounted(() => {
+      GetMenu();
+    });
+
+    /* 获取路由信息 */
+    const GetMenu = async () => {
+      store.dispatch("router/getRouterMenu", { type: 'MenuList' })
+    }
 
     /* 颜色设置 */
     const ThemeColor = computed(() => store.getters.ThemeColor);
@@ -77,8 +84,8 @@ export default {
       );
       naver(te.src);
 
-      // 关闭目录
-      store.dispatch('setting/SetMenuToggle')
+      // 手机端,点击目录后关闭
+      if (_isMobile) store.dispatch('setting/SetMenuToggle')
     };
 
     // 其他menu设置false
@@ -139,7 +146,13 @@ export default {
 
 <style lang="scss" scoped>
 .left-menu-contanier {
+  @include scrollbar();
   height: calc(100vh - 80px - 60px);
+  color: var(--theme-color-1);
+  background-color: var(--theme-background-2);
+  overflow-y: auto;
+  overflow-x: hidden;
+
   .menu-name {
     height: 40px;
     line-height: 40px;
