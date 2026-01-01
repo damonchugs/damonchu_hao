@@ -60,12 +60,12 @@ import AButton from "ant-design-vue/lib/button";
 import "ant-design-vue/lib/button/style/css";
 import APagination from "ant-design-vue/lib/pagination";
 import "ant-design-vue/lib/pagination/style/css";
-import ARadio from 'ant-design-vue/lib/radio';
+// import ARadio from 'ant-design-vue/lib/radio';
 import "ant-design-vue/lib/radio/style/css";
 
 import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue';
 
-import { ref, computed, nextTick } from 'vue';
+import { ref, nextTick } from 'vue';
 
 import { FullScreen } from '@/utils';
 
@@ -155,9 +155,9 @@ const PageChange = (val) => {
 }
 
 /* 页大小修改回调 */
-const PageSizeChange = (val) => {
+// const PageSizeChange = (val) => {
   
-}
+// }
 
 /* 下拉监听 */
 const ImagesScroll = (event) => {
@@ -195,13 +195,13 @@ const ImagesScroll = (event) => {
 const ImageStyleDirectionFoo = (val) => {
   // 设置图片排列方向
   ImageStyle.value.direction = val;
+  const ImageDom = document.querySelector('.image-array-con-image');
   if (val === 'row') {
     // 如果方向为行，反转图片数组并应用
     Images.value = [...Images.value];
     Images.value.reverse();
     // 使用 setTimeout 延迟执行滚动到最右边的动画
     setTimeout(() => {
-      const ImageDom = document.querySelector('.image-array-con-image');
       // 获取最后一个图片元素的位置和宽度
       const { offsetLeft, clientWidth } = ImageDom.children[ImageDom.children.length - 1];
       // 设置滚动条位置到最右边
