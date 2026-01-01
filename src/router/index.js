@@ -4,7 +4,7 @@ import Layout from "@/layout/index.vue";
 
 import ImageArray from "@/views/ImageArray/index.vue";
 
-export const AsyncRouter = [
+const AsyncRouter = [
   {
     path: "/images",
     component: ImageArray,

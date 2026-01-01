@@ -40,7 +40,6 @@
           >登录</Button
         >
       <div>
-      <div>
         <Button type="primary" @click="OpenPianoVisible">
           钢琴
         </Button>
@@ -150,6 +149,10 @@ import {
   MenuFoldOutlined,
   CustomerServiceOutlined,
   ConsoleSqlOutlined,
+  VideoCameraOutlined,
+  SearchOutlined,
+  InstagramOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -160,6 +163,10 @@ export default {
     MenuFoldOutlined,
     CustomerServiceOutlined,
     ConsoleSqlOutlined,
+    VideoCameraOutlined,
+    InstagramOutlined,
+    SearchOutlined,
+    DownloadOutlined,
     Button,
     Drawer,
     Group,
@@ -205,6 +212,67 @@ export default {
           .find((t) => t.value === ThemeColor.value)
           .colors.split("|")[2]
     );
+
+    const VrPlayer = ref({
+      visible: false,
+      title: '',
+      height: '100vh',
+      direction: 'top',
+    })
+
+    const Search = ref({
+      visible: false,
+      title: '',
+    })
+
+    const OpenVrPlayerVisible = (val) => {
+      VrPlayer.value.visible = true
+    }
+
+    const VrPlayerClose = (val) => {
+      VrPlayer.value.visible = false
+    }
+
+    const OpenSearchVisible = (val) => {
+      Search.value.visible = true
+    }
+
+    const SearchClose = (val) => {
+      Search.value.visible = false
+    }
+
+    /* 钢琴功能显示 */
+    const PianoSet = ref({
+      visible: false,
+      title: '',
+      height: '80vh',
+      direction: 'top',
+    })
+
+    const OpenPianoVisible = (val) => {
+      PianoSet.value.visible = true
+    }
+
+    const PianoSetClose = (val) => {
+      PianoSet.value.visible = false
+    }
+
+    /* 下载图片页 */
+    const DownloadImage = ref({
+      visible: false,
+      title: '',
+      direction: 'top',
+      height: '80vh'
+    })
+    
+    /* 打开下载图片页 */
+    const OpenDownloadImageVisible = () => {
+      DownloadImage.value.visible = true;
+    }
+    /* 关闭下载图片页 */
+    const DownloadImageClose = () => {
+      DownloadImage.value.visible = false;
+    }
 
     /* 目录展开/收缩 */
     const PhoneMenuToggle = computed(() => store.getters.PhoneMenuToggle);

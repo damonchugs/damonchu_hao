@@ -21,10 +21,38 @@ function CheckData(routerArray) {
   const subject = localStorage.getItem("dchaoStorage") || route[0].src || "web";
   const router = route.find((t) => t.src === subject);
 
-router.open = true;
-router.children[0].open = true;
+  router.open = true;
+  router.children[0].open = true;
 
-console.log(mocks, json);
+  console.log(router, route, subject)
+
+  return {
+    router,
+    route,
+    subject,
+  };
+}
+
+/* 获取网页列表 - 转换代码格式 */
+function CheckTab(router, subject, tab_list) {
+  const list = router.find((t) => t.src === subject)?.children || null;
+
+  if (list === null) return [];
+
+  /* 整理 */
+  const Tab = [];
+  list.forEach((temp) => {
+    const { id, name, src, subtitle } = temp;
+    Tab.push({
+      name,
+      src,
+      subtitle,
+      hao: tab_list.filter((t) => t.directory_id === id),
+    });
+  });
+
+  return Tab;
+}
 
 const state = {
   subject: "",
