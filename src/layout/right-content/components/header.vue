@@ -9,8 +9,12 @@
     <div class="tab-name">{{ pathName }}</div>
 
     <div class="set">
+      <p><SearchOutlined :spin="loading" @click="OpenSearchVisible" /></p>
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
+      <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
+      <p><InstagramOutlined :spin="loading" @click="GoToImageArray" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
+      <p><DownloadOutlined :spin="loading" @click="OpenDownloadImageVisible" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
     </div>
 
@@ -36,6 +40,7 @@
           >登录</Button
         >
       <div>
+      <div>
         <Button type="primary" @click="OpenPianoVisible">
           钢琴
         </Button>
@@ -54,6 +59,8 @@
         <BaseDataContainer v-else />
       </div>
     </Drawer> -->
+
+    <!-- 钢琴 -->
     <Drawer
       v-model:visible="PianoSet.visible"
       :title="PianoSet.title"
@@ -67,15 +74,61 @@
         <Piano />
       </div>
     </Drawer>
+
+    <!-- Vr视频 -->
+    <Drawer
+      v-model:visible="VrPlayer.visible"
+      :title="VrPlayer.title"
+      :height="VrPlayer.height"
+      :placement="VrPlayer.direction"
+      width="90%"
+      class="vrclass"
+      @after-visible-change="VrPlayerClose"
+    >
+      <div class="vrclass-container">
+        <VrPlayerDom v-if="VrPlayer.visible" />
+      </div>
+    </Drawer>
+
+    <!-- 搜索框 -->
+    <Modal
+      v-model:visible="Search.visible"
+      :title="Search.title"
+      :footer="null"
+      :width="IsPhone ? '100%' : '50%'"
+      class="SearchClass"
+      closable
+      destroyOnClose
+      @cancel="SearchClose"
+    >
+      <div class="Search-container">
+        <SearchBoxDom v-if="Search.visible" />
+      </div>
+    </Modal>
+
+    <Drawer
+      v-model:visible="DownloadImage.visible"
+      :title="DownloadImage.title"
+      :height="DownloadImage.height"
+      :placement="DownloadImage.direction"
+      width="90%"
+      class="pianoclass"
+      @after-visible-change="DownloadImageClose"
+    >
+      <div class="DownloadImage-container">
+        <DownloadImages />
+      </div>
+    </Drawer>
   </div>
 </template>
 
 <script>
 // 引用组件
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 // 引用组件
+import Modal from "ant-design-vue/lib/modal";
 import Drawer from "ant-design-vue/lib/drawer";
 import Button from "ant-design-vue/lib/button";
 import "ant-design-vue/lib/button/style/css";
@@ -84,7 +137,11 @@ import { Group, RadioButton } from "ant-design-vue/lib/radio";
 import "ant-design-vue/lib/radio/style/css";
 import LoginContainer from "@/views/login";
 import BaseDataContainer from "@/views/baseData";
+
 import Piano from '@/views/piano';
+import VrPlayerDom from '@/views/vrPlayer';
+import SearchBoxDom from '@/views/searchBox';
+import DownloadImages from '@/views/downloadImage';
 
 import {
   SyncOutlined,
@@ -107,9 +164,13 @@ export default {
     Drawer,
     Group,
     RadioButton,
+    Modal,
     LoginContainer,
     BaseDataContainer,
-    Piano
+    Piano,
+    VrPlayerDom,
+    SearchBoxDom,
+    DownloadImages
   },
   setup() {
     let loading = ref(false);
@@ -132,6 +193,8 @@ export default {
 
     const store = useStore();
     let pathName = computed(() => store.state.router.path);
+    /* 判断是否是手机pad */
+    const IsPhone = computed(() => store.getters.IsPhone);
     /* 颜色设置 */
     const ThemeColor = computed(() => store.getters.ThemeColor);
     const ThemeColorValue = computed(() => ThemeColor.value);
@@ -175,6 +238,12 @@ export default {
       store.dispatch("setting/SetColorValue", val.target.value);
     };
 
+    // 跳转图片页
+    const GoToImageArray = () => {
+      
+      window.open('/hao/#/images');
+    };
+
     return {
       pathName,
       loading,
@@ -183,14 +252,26 @@ export default {
       ThemeColor,
       BackgroundColor,
       PhoneMenuToggle,
+      VrPlayer,
+      OpenVrPlayerVisible,
+      VrPlayerClose,
       PianoSet,
       OpenPianoVisible,
       PianoSetClose,
+      Search,
+      OpenSearchVisible,
+      SearchClose,
       reflashPage,
       drawerClose,
       SettingBackground,
       ChangeThemeColor,
       MenuToggleClick,
+      GoToImageArray,
+      IsPhone,
+      DownloadImage,
+      OpenDownloadImageVisible,
+      DownloadImageClose,
+      DownloadOutlined,
     };
   },
 };
@@ -204,6 +285,12 @@ export default {
   line-height: 80px;
   color: var(--theme-color-1);
   background-color: var(--theme-background-5);
+
+  .tab-name {
+    @include Ellipsis();
+    min-width: 112px;
+  }
+
   .set {
     display: flex;
     p {
@@ -229,8 +316,26 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
   .pianoclass.ant-drawer .ant-drawer-content {
     overflow-y: hidden;
   }
+  .vrclass.ant-drawer {
+    .ant-drawer-close {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .anticon.anticon-close {
+      position: relative;
+      top: 0px;
+      left: -15px;
+    }
+  }
+
+  // .Search-container {
+    
+  // }
 </style>

@@ -77,3 +77,33 @@ div {
   font-family: "Blazed";
   src: url("https://damonchu-1301459681.cos.ap-chengdu.myqcloud.com/damonchu.fun/font/Blazed.ttf");
 }
+
+/* 滚动条 */
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #eee;
+    border-radius: 3px;
+    position: absolute;
+    top: 0px;
+    right: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+}
+
+/* 省略号 */
+@mixin Ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

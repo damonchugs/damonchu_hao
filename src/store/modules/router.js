@@ -18,7 +18,7 @@ function CheckData(routerArray) {
   });
 
   // 获取上次浏览专题 - 默认第一个专题
-  const subject = localStorage.getItem("dchaoStorage") || route[0].src;
+  const subject = localStorage.getItem("dchaoStorage") || route[0].src || "web";
   const router = route.find((t) => t.src === subject);
 
 router.open = true;
@@ -69,14 +69,17 @@ const actions = {
     return new Promise(async (resolve) => {
       let Tab = [];
       if (state.tab.length === 0) {
-        const { data } = await Server.hao.GetMainMenu({ type: "HaoList" });
+        // 获取目录列表
+        const { data } = await Server.hao.GetMainMenuJson({ type: "HaoList" }); // GetMainMenu
 
         const { router, subject } = state;
+        // 整理数据格式，并赋值
         Tab = CheckTab(router, payload, data);
         commit("SET_HAO", data);
         commit("SET_TAB", Tab);
       } else {
         const { router, subject, hao } = state;
+        // 整理数据格式，并赋值
         Tab = CheckTab(router, payload, hao);
       }
       resolve(Tab);
@@ -86,19 +89,23 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         if (state.router.length === 0) {
-          const response_menu = await Server.hao.GetMainMenu({
+          const response_menu = await Server.hao.GetMainMenuJson({ // GetMainMenu
             type: "MenuList",
           });
+          console.log(response_menu, 'response_menu');
           const { router, route, subject } = CheckData(response_menu.data);
 
           commit("SET_SUBJECT", subject);
           commit("SET_PATH", `${router.name} / ${router.children[0].name}`);
           commit("SET_ROUTER", route);
           resolve(router);
+          console.log("err——2", router);
         } else {
+          console.log("err——1");
           resolve(state.router);
         }
       } catch (err) {
+        console.log("err", err);
         resolve([]);
       }
     });

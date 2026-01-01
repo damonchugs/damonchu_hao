@@ -36,6 +36,7 @@
 <script>
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
+import { _isMobile } from "@/utils/index";
 export default {
   setup() {
     const store = useStore();
@@ -82,6 +83,9 @@ export default {
         `${pathName.value.split("/")[0].trim()} / ${te.name}`
       );
       naver(te.src);
+
+      // 手机端,点击目录后关闭
+      if (_isMobile) store.dispatch('setting/SetMenuToggle')
     };
 
     // 其他menu设置false
@@ -142,9 +146,12 @@ export default {
 
 <style lang="scss" scoped>
 .left-menu-contanier {
+  @include scrollbar();
   height: calc(100vh - 80px - 60px);
   color: var(--theme-color-1);
   background-color: var(--theme-background-2);
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .menu-name {
     height: 40px;
