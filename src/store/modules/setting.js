@@ -1,40 +1,56 @@
+/* 修改Html标签 */
+const ChangeHtmlType = (colorScheme) => {
+  const html = document.getElementsByTagName("html")[0];
+  html.className = colorScheme;
+};
+
+const ColorScheme = localStorage.getItem("DamonchuHaoTheme") || "light";
+ChangeHtmlType(ColorScheme);
+
 const state = {
   color: {
-    value: localStorage.getItem('DamonchuHaoTheme') || 'light',
+    value: ColorScheme,
     options: [
-      { value: 'light', colors: '#595959|#e8e8e8,#c1c1c1,#d3d3d3,#000000|#bcbcbc,#000000' },
-      { value: 'dark', colors: '#000000|#001529,#096dd9,#1890ff,#ffffff|#001529,#ffffff' },
-    ]
+      {
+        value: "light",
+        colors: "#595959|#e8e8e8,#c1c1c1,#d3d3d3,#000000|#bcbcbc,#000000",
+      },
+      {
+        value: "dark",
+        colors: "#000000|#001529,#096dd9,#1890ff,#ffffff|#001529,#ffffff",
+      },
+    ],
   },
   isPhone: window.screen.width <= 1000,
   menu: {
     toggle: false,
-  }
-}
+  },
+};
 
 const mutations = {
   SET_COLOR_VALUE(state, payload) {
-    state.color.value = payload
+    state.color.value = payload;
   },
   SET_MENU_TOGGLE(state) {
-    state.menu.toggle = !state.menu.toggle
-  }
-}
+    state.menu.toggle = !state.menu.toggle;
+  },
+};
 
 const actions = {
   /* 设置主题颜色 */
   SetColorValue({ commit }, payload) {
-    localStorage.setItem('DamonchuHaoTheme', payload)
-    commit('SET_COLOR_VALUE', payload)
+    localStorage.setItem("DamonchuHaoTheme", payload);
+    commit("SET_COLOR_VALUE", payload);
+    ChangeHtmlType(payload);
   },
   SetMenuToggle({ commit }) {
-    commit('SET_MENU_TOGGLE')
-  }
-}
+    commit("SET_MENU_TOGGLE");
+  },
+};
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
-}
+  actions,
+};

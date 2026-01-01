@@ -1,8 +1,56 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 * {
   margin: 0;
   padding: 0;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+/* [
+  {
+    value: "light",
+    colors: "#595959|#e8e8e8,#c1c1c1,#d3d3d3,#000000|#bcbcbc,#000000",
+  },
+  {
+    value: "dark",
+    colors: "#000000|#001529,#096dd9,#1890ff,#ffffff|#001529,#ffffff",
+  },
+] */
+
+/* 定义根作用域下的变量 */
+:root {
+  --theme-background-1: #595959;
+  --theme-background-2: #e8e8e8;
+  --theme-background-3: #c1c1c1;
+  --theme-background-4: #d3d3d3;
+  --theme-background-5: #bcbcbc;
+  --theme-color-1: #000000;
+}
+/* 更改light类名下变量的取值 */
+.dark {
+  --theme-background-1: #000000;
+  --theme-background-2: #001529;
+  --theme-background-3: #096dd9;
+  --theme-background-4: #1890ff;
+  --theme-background-5: #001529;
+  --theme-color-1: #ffffff;
+}
+/* 更改light类名下变量的取值 */
+.light {
+  --theme-background-1: #595959;
+  --theme-background-2: #e8e8e8;
+  --theme-background-3: #c1c1c1;
+  --theme-background-4: #d3d3d3;
+  --theme-background-4: #bcbcbc;
+  --theme-color-1: #000000;
+}
+/* 更改pink类名下变量的取值 */
+.pink {
+  --theme-background: #fff;
+  --theme-color: pink;
 }
 
 body {
@@ -13,4 +61,49 @@ body {
 
 div {
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "ChannelSlanted2";
+  src: url("https://damonchu-1301459681.cos.ap-chengdu.myqcloud.com/damonchu.fun/font/Channel_Slanted2.ttf");
+}
+
+@font-face {
+  font-family: "Edwardian";
+  src: url("https://damonchu-1301459681.cos.ap-chengdu.myqcloud.com/damonchu.fun/font/EdwardianScriptITC.ttf");
+}
+
+@font-face {
+  font-family: "Blazed";
+  src: url("https://damonchu-1301459681.cos.ap-chengdu.myqcloud.com/damonchu.fun/font/Blazed.ttf");
+}
+
+/* 滚动条 */
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #eee;
+    border-radius: 3px;
+    position: absolute;
+    top: 0px;
+    right: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+}
+
+/* 省略号 */
+@mixin Ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

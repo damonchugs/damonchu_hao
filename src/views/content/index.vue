@@ -21,7 +21,7 @@
           @click="gotoHref(te.href)"
         >
           <p>{{ te.name }}</p>
-          <p>{{ te.description }}</p>
+          <p>{{ te.subtitle }}</p>
         </div>
       </div>
     </div>
@@ -35,8 +35,6 @@ import "ant-design-vue/lib/divider/style/css";
 // 引用插件
 import { ref, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-// 请求数据
-import axios from "axios";
 
 const store = useStore();
 
@@ -60,14 +58,14 @@ onMounted(() => {
 });
 
 // 获取tab_data
-const getTabData = (url) => {
-  axios.get(`/mock/${url}`).then((response) => {
-    hao_data.value = response.data.tab;
+const getTabData = async (url) => {
+  const router = await store.dispatch('router/getRouterTab', url);
+  
+  hao_data.value = router;
 
-    // 保存上次浏览专题
-    store.dispatch("router/setSubject", url);
-    localStorage.setItem("dchaoStorage", url);
-  });
+  // 保存上次浏览专题
+  store.dispatch("router/setSubject", url);
+  localStorage.setItem("dchaoStorage", url);
 };
 
 // 跳转链接
