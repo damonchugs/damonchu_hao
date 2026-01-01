@@ -14,6 +14,7 @@
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
       <p><InstagramOutlined :spin="loading" @click="GoToImageArray" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
+      <p><DownloadOutlined :spin="loading" @click="OpenDownloadImageVisible" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
     </div>
 
@@ -103,6 +104,20 @@
         <SearchBoxDom v-if="Search.visible" />
       </div>
     </Modal>
+
+    <Drawer
+      v-model:visible="DownloadImage.visible"
+      :title="DownloadImage.title"
+      :height="DownloadImage.height"
+      :placement="DownloadImage.direction"
+      width="90%"
+      class="pianoclass"
+      @after-visible-change="DownloadImageClose"
+    >
+      <div class="DownloadImage-container">
+        <DownloadImages />
+      </div>
+    </Drawer>
   </div>
 </template>
 
@@ -125,6 +140,7 @@ import BaseDataContainer from "@/views/baseData";
 import Piano from '@/views/piano';
 import VrPlayerDom from '@/views/vrPlayer';
 import SearchBoxDom from '@/views/searchBox';
+import DownloadImages from '@/views/downloadImage';
 
 import {
   SyncOutlined,
@@ -136,6 +152,7 @@ import {
   VideoCameraOutlined,
   SearchOutlined,
   InstagramOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -149,6 +166,7 @@ export default {
     VideoCameraOutlined,
     InstagramOutlined,
     SearchOutlined,
+    DownloadOutlined,
     Button,
     Drawer,
     Group,
@@ -158,7 +176,8 @@ export default {
     BaseDataContainer,
     Piano,
     VrPlayerDom,
-    SearchBoxDom
+    SearchBoxDom,
+    DownloadImages
   },
   setup() {
     let loading = ref(false);
@@ -222,8 +241,6 @@ export default {
       Search.value.visible = false
     }
 
-
-
     /* 钢琴功能显示 */
     const PianoSet = ref({
       visible: false,
@@ -238,6 +255,23 @@ export default {
 
     const PianoSetClose = (val) => {
       PianoSet.value.visible = false
+    }
+
+    /* 下载图片页 */
+    const DownloadImage = ref({
+      visible: false,
+      title: '',
+      direction: 'top',
+      height: '80vh'
+    })
+    
+    /* 打开下载图片页 */
+    const OpenDownloadImageVisible = () => {
+      DownloadImage.value.visible = true;
+    }
+    /* 关闭下载图片页 */
+    const DownloadImageClose = () => {
+      DownloadImage.value.visible = false;
     }
 
     /* 目录展开/收缩 */
@@ -302,6 +336,10 @@ export default {
       MenuToggleClick,
       GoToImageArray,
       IsPhone,
+      DownloadImage,
+      OpenDownloadImageVisible,
+      DownloadImageClose,
+      DownloadOutlined,
     };
   },
 };

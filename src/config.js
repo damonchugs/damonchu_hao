@@ -4,7 +4,7 @@ export default {
     /* 网页路由 */
     URL: "/", // / /lnt/
     /* 接口ip和端口 */
-    API_PREFIX: "http://damonchu.fun/api", // ‘http://127.0.0.1:3001’ 'http://42.192.167.129:3001', // '/ln_api/',
+    API_PREFIX: '/fun_api', //"/fun_api", //"http://damonchu.fun/api", // ‘http://127.0.0.1:3001’ 'http://42.192.167.129:3001', // '/ln_api/',
     /* 备案信息 */
     BEI_AN: {
       TEXT: "皖ICP备2021011322号-1",

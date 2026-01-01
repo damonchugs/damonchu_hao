@@ -18,8 +18,11 @@
       </div>
       <div v-show="Pages.max > 0" class="pick-btn">
         <div class="radio-style">
-          <AButton :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('col')">竖版</AButton>
-          <AButton :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('row')">横版</AButton>
+          <AButton v-if="ImageStyle.direction === 'col'" :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('row')">切换横版</AButton>
+          <AButton v-else :type="ImageStyle.direction === 'row' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('col')">切换竖版</AButton>
+        
+          <AButton v-if="Pages.sort === 1 && ImageStyle.direction === 'row'" @click="SetOrder(2)">切换倒序</AButton>
+          <AButton v-if="Pages.sort === 2 && ImageStyle.direction === 'row'" @click="SetOrder(1)">切换顺序</AButton>
         </div>
       </div>
       <div class="fullscreen-btn">
@@ -62,7 +65,7 @@ import "ant-design-vue/lib/radio/style/css";
 
 import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue';
 
-import { ref, computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 
 import { FullScreen } from '@/utils';
 
@@ -75,12 +78,13 @@ const Pages = ref({
   max: 0,
   min: 1,
   current: 1,
-  pageSize: 1000,
-  defaultPageSize: 1000,
+  pageSize: 100,
+  defaultPageSize: 100,
   pageSizeOptions: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   change: false,
   select: 1,
-  selectSize: [1]
+  selectSize: [1],
+  sort: 2, // 1 顺序 2 倒序
 });
 
 const ImageStyle = ref({
@@ -123,15 +127,11 @@ const selectMkdir = (event) => {
   Pages.value.current = 1;
   Pages.value.select = 1;
 
-  console.log(Pages.value.max, 'Pages.value.max');
-
   const numbers = [];
   for (let i = 1; i <= images.length / 100 + 1; i++) {
     numbers.push(i)
   }
   Pages.value.selectSize = numbers;
-
-  console.log('Pages.value', Pages.value);
 };
 
 /* 页面切换 */
@@ -149,9 +149,9 @@ const PageChange = (val) => {
   }
 
   // 页面切换恢复
-  setTimeout(() => {
+  nextTick(() => {
     Pages.value.change = false;
-  }, 50);
+  });
 }
 
 /* 页大小修改回调 */
@@ -182,7 +182,9 @@ const ImagesScroll = (event) => {
   if (ImageStyle.value.direction === 'col') { // 竖屏
     Pages.value.current = index === 0 ? Pages.value.max : index;
   } else { // 横屏
-    Pages.value.current = index === 0 ? 1 : Pages.value.max - index;
+    Pages.value.current = index === 0
+      ? 1
+      : (Pages.value.sort === 2 ? Pages.value.max - index : index);
   }
 }
 
@@ -195,7 +197,7 @@ const ImageStyleDirectionFoo = (val) => {
   ImageStyle.value.direction = val;
   if (val === 'row') {
     // 如果方向为行，反转图片数组并应用
-    Images.value = [...OriginImageArray.value];
+    Images.value = [...Images.value];
     Images.value.reverse();
     // 使用 setTimeout 延迟执行滚动到最右边的动画
     setTimeout(() => {
@@ -207,7 +209,7 @@ const ImageStyleDirectionFoo = (val) => {
     }, 10) // 延迟 10ms 执行，以便确保 DOM 更新完毕
   } else {
     // 如果方向不是行，重置图片数组并滚动到顶部
-    Images.value = [...OriginImageArray.value];
+    Images.value = [...Images.value];
     // 直接设置滚动条到顶部
     ImageDom.scrollTop = 0;
   }
@@ -222,6 +224,24 @@ const FullScreenToggle = () => {
     FullScreen.open(document.querySelector('#image-array-container'));
     IsFullScreen.value = !IsFullScreen.value;
   }
+}
+
+/**
+ * 设置顺序显示
+ */
+const SetOrder = (type) => {
+  Pages.value.sort = type;
+
+  // 获取图片数组 - 按顺序处理
+  const images = [...Images.value];
+
+  images.reverse();
+
+  // 设置图片数组
+  Images.value = images;
+  nextTick(() => {
+    PageChange(type === 1 ? Pages.value.max : 1);
+  })
 }
 
 </script>

@@ -24,6 +24,8 @@ function CheckData(routerArray) {
   router.open = true;
   router.children[0].open = true;
 
+  console.log(router, route, subject)
+
   return {
     router,
     route,
@@ -96,7 +98,7 @@ const actions = {
       let Tab = [];
       if (state.tab.length === 0) {
         // 获取目录列表
-        const { data } = await Server.hao.GetMainMenu({ type: "HaoList" });
+        const { data } = await Server.hao.GetMainMenuJson({ type: "HaoList" }); // GetMainMenu
 
         const { router, subject } = state;
         // 整理数据格式，并赋值
@@ -115,9 +117,10 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         if (state.router.length === 0) {
-          const response_menu = await Server.hao.GetMainMenu({
+          const response_menu = await Server.hao.GetMainMenuJson({ // GetMainMenu
             type: "MenuList",
           });
+          console.log(response_menu, 'response_menu');
           const { router, route, subject } = CheckData(response_menu.data);
 
           commit("SET_SUBJECT", subject);
