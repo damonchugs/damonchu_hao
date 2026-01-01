@@ -79,6 +79,11 @@ const bbs_tab = [
         href: "https://www.elpwc.com/eldenringmap/#/",
         description: "老头环互动收集地图，找路寻物好帮手。(详细)",
       },
+      {
+        name: "MHWS巨戟龙武器工具",
+        href: "https://mhws-tools.vercel.app/",
+        description: "MHWS巨戟龙武器工具，只能外网网络访问",
+      },
     ],
   },
   {
@@ -126,7 +131,8 @@ const bbs_tab = [
       },
       {
         name: "猫灵",
-        href: "https://www.baidu.com/s?wd=%E7%8C%AB%E7%81%B5%E5%8A%A0%E9%80%9F%E5%99%A8",
+        href:
+          "https://www.baidu.com/s?wd=%E7%8C%AB%E7%81%B5%E5%8A%A0%E9%80%9F%E5%99%A8",
         description: "优点：免费，缺点：无官网，稳定性？",
       },
       {
