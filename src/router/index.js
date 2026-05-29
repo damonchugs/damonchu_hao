@@ -3,12 +3,18 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from "@/layout/index.vue";
 
 import ImageArray from "@/views/ImageArray/index.vue";
+import ComicViewer from "@/views/comicViewer/index.vue";
 
 const AsyncRouter = [
   {
     path: "/images",
     component: ImageArray,
     name: "ImageArray",
+  },
+  {
+    path: "/comicViewer",
+    component: ComicViewer,
+    name: "comicViewer",
   },
 ];
 

@@ -958,6 +958,13 @@
       "href": "https://decrypt.day/",
       "subtitle": "Decrypt IPA Store, 可以下载解密的ios安装包文件，用于mac安装",
       "directory_id": 25
+    },
+    {
+      "id": 139,
+      "name": "MHWS巨戟龙武器工具",
+      "href": "https://mhws-tools.vercel.app/",
+      "subtitle": "MHWS巨戟龙武器工具，只能外网网络访问",
+      "directory_id": 25
     }
   ]
 }
