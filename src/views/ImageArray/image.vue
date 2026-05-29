@@ -25,11 +25,9 @@ let observer = null;
 
 function applySize(w, h) {
   if (!w || !h) return;
-  // 使用占位容器保持比例： 百分比
-  const ratio = (h / w) * 100;
   styleObject.value = {
     width: props.direction === 'row' ? `auto` : '100vw',
-    height: props.direction === 'row' ? 'calc(100vh - 41px)' : `${ratio}%`,
+    height: props.direction === 'row' ? 'calc(100vh - 41px)' : `calc(100vw * ${h/w})`,
     paddingLeft: props.direction === 'row' ? `calc((100vh - 41px) * ${w/h})` : '0',
     overflow: 'hidden',
   };
