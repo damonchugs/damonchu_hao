@@ -13,6 +13,7 @@
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
       <p><InstagramOutlined :spin="loading" @click="GoToImageArray" /></p>
+      <p><ReadOutlined :spin="loading" @click="GoToComicViewer" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><DownloadOutlined :spin="loading" @click="OpenDownloadImageVisible" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
@@ -153,6 +154,7 @@ import {
   SearchOutlined,
   InstagramOutlined,
   DownloadOutlined,
+  ReadOutlined,
 } from "@ant-design/icons-vue";
 
 export default {
@@ -167,6 +169,7 @@ export default {
     InstagramOutlined,
     SearchOutlined,
     DownloadOutlined,
+    ReadOutlined,
     Button,
     Drawer,
     Group,
@@ -312,6 +315,11 @@ export default {
       window.open('/#/images');
     };
 
+    // 跳转漫画页
+    const GoToComicViewer = () => {
+      window.open('/#/comicViewer');
+    };
+
     return {
       pathName,
       loading,
@@ -335,6 +343,7 @@ export default {
       ChangeThemeColor,
       MenuToggleClick,
       GoToImageArray,
+      GoToComicViewer,
       IsPhone,
       DownloadImage,
       OpenDownloadImageVisible,
