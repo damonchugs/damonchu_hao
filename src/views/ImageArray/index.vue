@@ -114,7 +114,7 @@ const selectMkdir = (event) => {
 
   // 图片展示
   OriginImageArray.value = images;
-  Images.value = images; //.filter((t, index) => index < 100);
+  Images.value = [...images]; //.filter((t, index) => index < 100);
 
   // 页码设置
   Pages.value.max = images.length; // .filter((t, index) => index < 100)
@@ -138,7 +138,7 @@ const PageChange = (val) => {
   const ImageDomParent = document.querySelector('.imagesScroll');
 
   if (ImageStyle.value.direction === 'col') { // 竖屏
-    ImageDomParent.scrollTop = ImageDom.children[val - 1].offsetTop;
+    ImageDomParent.scrollTop = 0;
   } else { // 横屏
     ImageDomParent.scrollLeft = val === 1 ? ImageDomParent.scrollWidth : 0;
 
@@ -202,8 +202,7 @@ const ImageStyleDirectionFoo = (val) => {
     Images.value.reverse();
   } else {
     // 如果方向不是行，重置图片数组并滚动到顶部
-    Images.value = [...Images.value];
-    ImageDom.scrollTop = 0;
+    Images.value = [...OriginImageArray.value];
   }
 
   nextTick(() => {
