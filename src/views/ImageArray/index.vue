@@ -5,17 +5,6 @@
         <AButton type="primary">选择</AButton>
         <input type="file" @change="selectMkdir" multiple directory webkitdirectory />
       </div>
-      <div v-show="Pages.max > 0" class="page">
-        <Select class="page-select" :defaultValue="1" @change="ImageSelectChange">
-          <Option v-for="t in Pages.selectSize" :key="`ImageSelectChange_${t}`" :value="t">{{ t }}</Option>
-        </Select>
-        <APagination
-          v-model:current="Pages.current"
-          :total="Pages.max"
-          showQuickJumper
-          :defaultPageSize="1"
-          @change="PageChange" />
-      </div>
       <div v-show="Pages.max > 0" class="pick-btn">
         <div class="radio-style">
           <AButton v-if="ImageStyle.direction === 'col'" :type="ImageStyle.direction === 'col' ? 'primary' : 'default'" @click="ImageStyleDirectionFoo('row')">切换横版</AButton>
@@ -36,14 +25,16 @@
     </div>
 
     <div
-      :class="`images image-array-con-image ${ImageStyle.direction === 'row' ? 'x-image' : 'y-image'}`"
+      :class="`images imagesScroll ${ImageStyle.direction === 'row' ? 'x-image-p' : 'y-image-p'}`"
       @scroll="ImagesScroll">
-      <div v-for="(t, index) in Images" :key="`${index}-${Date.now()}`" class="image-div">
-        <img
+      <div :class="`image-array-con-image ${ImageStyle.direction === 'row' ? 'x-image' : 'y-image'}`">
+        <ImageLoader v-for="(t, index) in Images" :key="`${index}-${Date.now()}`" :src="t" :index="index" :direction="ImageStyle.direction" />
+      </div>
+        <!-- <img
           :src="t"
           :data-index="index" />
-        <p class="image-number">{{ index + 1 }}</p>
-      </div>
+        <p class="image-number">{{ index + 1 }}</p> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -63,11 +54,14 @@ import "ant-design-vue/lib/pagination/style/css";
 // import ARadio from 'ant-design-vue/lib/radio';
 import "ant-design-vue/lib/radio/style/css";
 
+import ImageLoader from './image.vue';
+
 import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue';
 
 import { ref, nextTick } from 'vue';
 
 import { FullScreen } from '@/utils';
+import { set } from "nprogress";
 
 const Images = ref([]);
 const OriginImageArray = ref([]);
@@ -78,8 +72,8 @@ const Pages = ref({
   max: 0,
   min: 1,
   current: 1,
-  pageSize: 100,
-  defaultPageSize: 100,
+  pageSize: 100000,
+  defaultPageSize: 100000,
   pageSizeOptions: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   change: false,
   select: 1,
@@ -120,10 +114,10 @@ const selectMkdir = (event) => {
 
   // 图片展示
   OriginImageArray.value = images;
-  Images.value = images.filter((t, index) => index < 100);
+  Images.value = images; //.filter((t, index) => index < 100);
 
   // 页码设置
-  Pages.value.max = images.filter((t, index) => index < 100).length;
+  Pages.value.max = images.length; // .filter((t, index) => index < 100)
   Pages.value.current = 1;
   Pages.value.select = 1;
 
@@ -141,13 +135,19 @@ const PageChange = (val) => {
 
   // 按照图片offsetTop 设置父级的滚动高度
   const ImageDom = document.querySelector('.image-array-con-image');
+  const ImageDomParent = document.querySelector('.imagesScroll');
 
   if (ImageStyle.value.direction === 'col') { // 竖屏
-    ImageDom.scrollTop = ImageDom.children[val - 1].offsetTop;
+    ImageDomParent.scrollTop = ImageDom.children[val - 1].offsetTop;
   } else { // 横屏
-    ImageDom.scrollLeft = ImageDom.children[Pages.value.max - val].offsetLeft;
-  }
+    ImageDomParent.scrollLeft = val === 1 ? ImageDomParent.scrollWidth : 0;
 
+    nextTick(() => {
+      setTimeout(() => {
+        ImageDomParent.scrollLeft = val === 1 ? ImageDomParent.scrollWidth : 0;
+      }, 10);
+    })
+  }
   // 页面切换恢复
   nextTick(() => {
     Pages.value.change = false;
@@ -200,19 +200,17 @@ const ImageStyleDirectionFoo = (val) => {
     // 如果方向为行，反转图片数组并应用
     Images.value = [...Images.value];
     Images.value.reverse();
-    // 使用 setTimeout 延迟执行滚动到最右边的动画
-    setTimeout(() => {
-      // 获取最后一个图片元素的位置和宽度
-      const { offsetLeft, clientWidth } = ImageDom.children[ImageDom.children.length - 1];
-      // 设置滚动条位置到最右边
-      ImageDom.scrollLeft = offsetLeft + clientWidth;
-    }, 10) // 延迟 10ms 执行，以便确保 DOM 更新完毕
   } else {
     // 如果方向不是行，重置图片数组并滚动到顶部
     Images.value = [...Images.value];
-    // 直接设置滚动条到顶部
     ImageDom.scrollTop = 0;
   }
+
+  nextTick(() => {
+    setTimeout(() => {
+      PageChange(ImageStyle.value.direction === 'col' ? Pages.value.max : 1);
+    }, 10);
+  })
 }
 
 /* 打开/关闭 全屏显示 */
@@ -224,6 +222,11 @@ const FullScreenToggle = () => {
     FullScreen.open(document.querySelector('#image-array-container'));
     IsFullScreen.value = !IsFullScreen.value;
   }
+  nextTick(() => {
+    setTimeout(() => {
+      PageChange(ImageStyle.value.direction === 'col' ? Pages.value.max : 1);
+    }, 10);
+  })
 }
 
 /**
@@ -240,7 +243,7 @@ const SetOrder = (type) => {
   // 设置图片数组
   Images.value = images;
   nextTick(() => {
-    PageChange(type === 1 ? Pages.value.max : 1);
+    setTimeout(() => PageChange(type === 1 ? Pages.value.max : 1), 10);
   })
 }
 
@@ -332,24 +335,33 @@ $SelectHeight: 40px;
         user-select: none;
       }
     }
-    &.x-image {
+
+    &.x-image-p {
       overflow-x: auto;
       overflow-y: hidden;
-
-      display: flex;
-      img {
-        width: auto;
-        height: 100%;
-      }
     }
-    &.y-image {
+    &.y-image-p {
       overflow-y: auto;
       overflow-x: hidden;
+    }
 
-      display: block;
-      img {
+    .image-array-con-image {
+      width: 100%;
+      height: 100%;
+      gap: 10px;
+
+      &.x-image {
+        width: max-content;
+        /* overflow-x: auto;
+        overflow-y: hidden; */
+
+        display: flex;
+        flex-wrap: nowrap;
+      }
+      &.y-image {
         width: 100vw;
-        height: auto;
+        /* overflow-y: auto;
+        overflow-x: hidden; */
       }
     }
   }
