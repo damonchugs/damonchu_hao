@@ -12,8 +12,8 @@
       <p><SearchOutlined :spin="loading" @click="OpenSearchVisible" /></p>
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
-      <p><InstagramOutlined :spin="loading" @click="GoToImageArray" /></p>
-      <p><ReadOutlined :spin="loading" @click="GoToComicViewer" /></p>
+      <p><InstagramOutlined :spin="loading" @click="GoToComicViewer" /></p>
+      <p><ReadOutlined :spin="loading" @click="GoToImageArray" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><DownloadOutlined :spin="loading" @click="OpenDownloadImageVisible" /></p>
       <p><SettingOutlined :spin="loading" @click="SettingBackground" /></p>
