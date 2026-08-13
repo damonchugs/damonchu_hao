@@ -965,6 +965,13 @@
       "href": "https://mhws-tools.vercel.app/",
       "subtitle": "MHWS巨戟龙武器工具，只能外网网络访问",
       "directory_id": 25
+    },
+    {
+      "id": 140,
+      "name": "IPA商店",
+      "href": "https://ipa.store/",
+      "subtitle": "海量优质游戏应用iPA资源免费下载",
+      "directory_id": 25
     }
   ]
 }
