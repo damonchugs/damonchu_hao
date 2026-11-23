@@ -369,7 +369,7 @@ onBeforeUnmount(() => {
   --player-accent: #45d6b1;
   width: 100%;
   min-height: 420px;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 0px);
   position: relative;
   display: flex;
   flex-direction: column;

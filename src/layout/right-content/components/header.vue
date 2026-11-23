@@ -12,7 +12,7 @@
       <p><SearchOutlined :spin="loading" @click="OpenSearchVisible" /></p>
       <p><CustomerServiceOutlined :spin="loading" @click="OpenPianoVisible" /></p>
       <p><VideoCameraOutlined :spin="loading" @click="OpenVrPlayerVisible" /></p>
-      <p><InstagramOutlined :spin="loading" @click="GoToComicViewer" /></p>
+      <!-- <p><InstagramOutlined :spin="loading" @click="GoToComicViewer" /></p> -->
       <p><ReadOutlined :spin="loading" @click="GoToImageArray" /></p>
       <p><SyncOutlined :spin="loading" @click="reflashPage" /></p>
       <p><DownloadOutlined :spin="loading" @click="OpenDownloadImageVisible" /></p>
@@ -228,8 +228,10 @@ export default {
       title: '',
     })
 
-    const OpenVrPlayerVisible = (val) => {
-      VrPlayer.value.visible = true
+    // 打开视频
+    const OpenVrPlayerVisible = () => {
+      // VrPlayer.value.visible = true
+      window.open('./#/VideoCamera');
     }
 
     const VrPlayerClose = (val) => {
