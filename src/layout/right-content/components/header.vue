@@ -228,8 +228,10 @@ export default {
       title: '',
     })
 
-    const OpenVrPlayerVisible = (val) => {
-      VrPlayer.value.visible = true
+    // 打开视频
+    const OpenVrPlayerVisible = () => {
+      // VrPlayer.value.visible = true
+      window.open('./#/VideoCamera');
     }
 
     const VrPlayerClose = (val) => {

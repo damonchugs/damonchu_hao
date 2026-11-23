@@ -4,6 +4,7 @@ import Layout from "@/layout/index.vue";
 
 import ImageArray from "@/views/ImageArray/index.vue";
 import ComicViewer from "@/views/comicViewer/index.vue";
+import VideoCamera from "@/views/vrPlayer/index.vue";
 
 const AsyncRouter = [
   {
@@ -15,6 +16,11 @@ const AsyncRouter = [
     path: "/comicViewer",
     component: ComicViewer,
     name: "comicViewer",
+  },
+  {
+    path: "/VideoCamera",
+    component: VideoCamera,
+    name: "VrPlayerDom",
   },
 ];
 
